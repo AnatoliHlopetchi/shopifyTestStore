@@ -1,0 +1,128 @@
+{%- liquid
+  assign s = section.settings
+-%}
+
+<div
+  class='flex items-center justify-between h-mobileHeader lg:h-desktopHeader w-full border-b border-gray-100 bg-white px-5 lg:px-10'
+  data-component='header'
+>
+  <div class='flex-1 h-full'>
+    {% render 'header.mobile-nav' %}
+    {% render 'header.desktop-nav' %}
+  </div>
+
+  <a href='{{- routes.root_url -}}' class=''>
+    {%- render 'component.icon', type: 'logo', class: 'w-24 lg:w-32' -%}
+  </a>
+
+  <div class='flex-1 flex justify-end h-full'>
+    <a
+      class='hidden text-xs uppercase leading-none lg:flex items-center px-4'
+      href='{% if customer %}{{- routes.account_url -}}{% else %}{{- routes.account_login_url -}}{% endif %}'
+    >
+      {%- if customer -%}
+        {{- 'customer.header.view_account' | t -}}
+      {%- else %}
+        {{- 'customer.header.sign_in' | t -}}
+      {%- endif -%}
+    </a>
+    <button class='hidden lg:block px-4' type='button' data-search-toggle>
+      {%- render 'component.icon', type: 'search', class: 'w-4' -%}
+    </button>
+    <button class='px-3 lg:px-4' type='button' data-wishlist-toggle>
+      {% render 'component.icon',
+        type: 'wishlist',
+        class: 'w-4 text-black fill-transparent wishlist-active:fill-black'
+      %}
+    </button>
+    <a
+      class='flex px-3 lg:px-4 -mr-3 lg:-mr-4'
+      href='{{- routes.cart_url -}}'
+      data-cart-toggle
+    >
+      {%- render 'component.icon', type: 'cart', class: 'w-4' -%}
+      {% comment %} Cart (<span data-cart-count>{{- cart.item_count -}}</span>) {% endcomment %}
+    </a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "sticky top-0 left-0 right-0 z-30 bg-white",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "mobile_menu_footer_link_list",
+      "label": "Footer menu (mobile)",
+      "info": "The list of links in the mobile burger menu's footer"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Simple link",
+      "type": "simple_url",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "type": "menu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link",
+          "info": "If this is filled in, on click (desktop) it will be a link rather than just a hover to reveal mega menu"
+        },
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Menu"
+        },
+        {
+          "type": "header",
+          "content": "Card (only used on desktop)"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Card image"
+        },
+        {
+          "type": "text",
+          "id": "card_text",
+          "label": "Card text"
+        },
+        {
+          "type": "text",
+          "id": "card_cta",
+          "label": "Card cta",
+          "default": "Shop now"
+        },
+        {
+          "type": "url",
+          "id": "card_url",
+          "label": "Card link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

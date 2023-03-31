@@ -1,0 +1,59 @@
+<div class='max-w-sm mx-4 26rem:mx-auto mt-12 mb-7 lg:my-32'>
+  <h1 class='text-5xl'>{{ 'customer.activate.heading' | t }}</h1>
+  <p class='mt-4'>{{ 'customer.activate.subheading' | t }}</p>
+
+  {% form 'activate_customer_password', class: 'mt-16' %}
+    {% liquid
+      assign password_label_class = ""
+      assign password_input_class = ""
+      if form.errors contains 'password'
+        assign password_attributes = 'aria-invalid="true" aria-describedby="password-error" autofocus'
+        assign password_label_class = 'text-alert'
+        assign password_input_class = 'border-alert'
+      endif
+    %}
+
+    {%-
+      render 'component.input',
+      label: 'customer.activate.password',
+      placeholder: 'customer.activate.password',
+      id: 'password',
+      name: 'customer[password]',
+      type: 'password',
+      autocomplete: 'new-password',
+      required: true,
+      attributes: password_attributes,
+      input_class: password_input_class,
+      label_class: password_label_class
+    -%}
+
+    {%-
+      render 'component.input',
+      label: 'customer.activate.password_confirm',
+      placeholder: 'customer.activate.password_confirm',
+      id: 'password_confirmation',
+      name: 'customer[password_confirmation]',
+      type: 'password',
+      autocomplete: 'new-password',
+      required: true,
+      attributes: password_attributes,
+      input_class: password_input_class,
+      label_class: password_label_class,
+      container_class: 'mt-4'
+    -%}
+
+    {% render 'component.form-errors' with form_errors: form.errors %}
+
+    <input
+      type='submit'
+      value='{{ 'customer.activate.submit_button' | t }}'
+      class='py-3 mt-6 lg:w-full cursor-pointer font-normal bg-primary text-white hover:bg-primary/90 focus:bg-primary/90'
+    >
+    <input
+      type='submit'
+      name='decline'
+      value='{{ 'customer.activate.cancel_button' | t }}'
+      class='py-3 mt-3 lg:w-full cursor-pointer text-center font-normal bg-transparent text-primary border border-primary hover:bg-primary hover:text-white'
+    >
+  {% endform %}
+</div>

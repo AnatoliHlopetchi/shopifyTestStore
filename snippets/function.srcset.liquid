@@ -1,0 +1,8 @@
+{%- liquid
+  assign widths = '640x,750x,828x,1080x,1200x,1920x,2048x,3840x' | split: ','
+
+  for width in widths
+    assign w = width | replace: 'x', 'w, ' | prepend: ' '
+    echo img | img_url: width | append: w
+  endfor
+-%}

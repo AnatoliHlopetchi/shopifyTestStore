@@ -1,0 +1,84 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders picture element
+
+  About:
+    Render a responsive image on both mobile and desktop
+
+  Accepts:
+    - img: {Object} Mobile image
+
+    OPTIONAL
+    - desktop_img: {Object} (Default: img) Desktop image
+    - max_width: {Integer} (Default: 1920) The maximum size this image should render in, this can optimise the site speed.
+    - lazy: {Boolean} (Default: true) In case you would like to disable the lazy loading
+    - placeholder: {Boolean} (Default: true) In case you would like to show a placeholder bg-primary before image load
+    - class: {String} Class to add to the picture element
+    - img_class: {String} Class to add to the img element
+    - disable_aspect_ratio: {Boolean} (Default: false) If you want to disable the padding that forces the image to have the source's aspect ratio and make picture have the dimensions of its container
+    - alt: {String} (Default: img.alt || shop.name) String to override img's default alt text
+
+  Usage:
+    {%- render 'component.image',
+      img: s.image,
+      desktop_img: s.desktop_image,
+      max_width: 2560,
+      alt: s.title,
+      placeholder: true
+    -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign max_width = max_width | default: 1920
+  assign desktop_img = desktop_img | default: img
+
+  assign img_ratio = 1.00 | divided_by: img.aspect_ratio | times: 100
+  assign desktop_ratio = 1.00 | divided_by: desktop_img.aspect_ratio | times: 100
+
+  assign lazy = lazy | default: true, allow_false: true
+
+  assign placeholder = placeholder | default: true, allow_false: true
+
+  assign disable_aspect_ratio = disable_aspect_ratio | default: false, allow_false: true
+
+  if eager
+    assign lazy = false
+  endif
+-%}
+{%- comment -%} theme-check-disable ImgLazyLoading,RemoteAsset {%- endcomment -%}
+<picture
+  style='{%- unless disable_aspect_ratio -%} --mobile-ratio: {{ aspect_ratio | default: img_ratio }}%; --desktop-ratio: {{ desktop_ratio | default: aspect_ratio }}%; {%- endunless -%}'
+  class='{{- class }} relative w-full overflow-hidden block {% unless disable_aspect_ratio -%} pt-[var(--mobile-ratio)] lg:pt-[var(--desktop-ratio)] {%- endunless -%}'
+>
+  <source
+    media='(max-width: 1023px)'
+    sizes='(-webkit-min-device-pixel-ratio: 1),(max-resolution: 191dpi) 50vw, (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) 50vw'
+    srcset='
+      {{ img | image_url: width: 165 }} 165w,
+      {%- if max_width >= 360 -%}{{ img | image_url: width: 360 }} 360w,{%- endif -%}
+      {%- if max_width >= 535 -%}{{ img | image_url: width: 535 }} 535w,{%- endif -%}
+      {%- if max_width >= 767 -%}{{ img | image_url: width: 767 }} 767w,{%- endif -%}
+    '
+  >
+  <source
+    media='(min-width: 1024px)'
+    sizes='(-webkit-min-device-pixel-ratio: 1),(max-resolution: 191dpi) 50vw, (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) 100vw'
+    srcset='
+      {{ desktop_img | image_url: width: 768 }} 768w,
+      {%- if max_width >= 1070 -%}{{ desktop_img | image_url: width: 1070 }} 1070w,{%- endif -%}
+      {%- if max_width >= 1500 -%}{{ desktop_img | image_url: width: 1500 }} 1500w,{%- endif -%}
+      {%- if max_width >= 2560 -%}{{ desktop_img | image_url: width: 2560 }} 2560vw,{%- endif -%}
+    '
+  >
+  <img
+    src='{{ img | image_url: width: 1500 }}'
+    class='{{- img_class }} peer absolute inset-0 w-full h-full'
+    alt='{{- alt | default: img.alt | default: shop.name -}}'
+    loading='{%- if lazy -%}lazy{%- else -%}eager{%- endif -%}'
+    width='{{- img.width -}}'
+    height='{{- img.height -}}'
+  >
+  {%- if placeholder -%}
+    <div class='absolute inset-0 z-[-1] w-full h-full bg-primary'></div>
+  {%- endif -%}
+</picture>

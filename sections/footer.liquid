@@ -1,0 +1,127 @@
+{%- liquid
+  assign s = section.settings
+  assign year = 'today' | date: '%Y'
+-%}
+<footer class='flex flex-col p-10 pt-12 lg:pt-16 lg:pb-14 lg:px-[120px] lg:space-y-16 bg-lightGrey'>
+  <a href='{{- routes.root_url -}}' class='w-fit py-3 -mt-3 mb-4 lg:m-0 lg:p-0'>
+    {%- render 'component.icon', type: 'logo', class: 'w-36 lg:w-40' -%}
+  </a>
+  <div class='flex flex-col lg:flex-row justify-between'>
+    {% for link in linklists[s.footer_link_list].links %}
+      {%- liquid
+        if link.url == '#'
+          assign tag = 'span'
+          assign cursor = 'cursor-default'
+        else
+          assign tag = 'a'
+          assign cursor = ''
+          assign attributes = 'href="' | append: link.url | append: '"'
+        endif
+      -%}
+      {% if link.links != blank %}
+        {% capture child_links_content %}
+          <ul class='flex flex-col space-y-2 mb-4 lg:mb-0 lg:mt-6'>
+            {% for child_link in link.links %}
+              <li>
+                <a
+                  href='{{- child_link.url -}}'
+                  class='text-sm text-black opacity-70'
+                >
+                  {{- child_link.title -}}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endcapture %}
+      {% endif %}
+      {%- comment -%}Desktop footer menu{%- endcomment -%}
+      <div class='hidden lg:block'>
+        <{{ tag }} class='uppercase {{ cursor -}}' {{ attributes }}>
+          {{- link.title -}}
+        </{{ tag }}>
+        {{ child_links_content }}
+      </div>
+
+      {%- comment -%}Mobile footer menu{%- endcomment -%}
+      {%- if link.links != blank -%}
+        {%- render 'component.accordion',
+          title: link.title,
+          content: child_links_content,
+          group: section.id,
+          container_class: 'lg:hidden',
+          title_class: 'uppercase',
+          button_class: 'pb-6'
+        -%}
+      {%- else -%}
+        <a
+          class='block lg:hidden w-full uppercase pt-5 pb-6'
+          href='{{- link.url -}}'
+        >
+          {{- link.title -}}
+        </a>
+      {%- endif -%}
+    {% endfor %}
+    {%- form 'customer',
+      data-component: 'footerNewsletter',
+      class: 'pt-10 lg:pt-0 border-b border-t lg:border-t-0 border-black border-opacity-30 h-fit lg:max-w-[365px]'
+    -%}
+      <h2 class='text-2xl lg:text-3xl mb-4 lg:mb-10'>
+        {{- 'general.footer.newsletter.title' | t -}}
+      </h2>
+      {%- unless form.posted_successfully? -%}
+        <p data-error class='hidden'>
+          {% comment %}Content will be added in footer-newsletter.js{% endcomment %}
+        </p>
+        <div class='flex justify-between flex-grow'>
+          <input type='hidden' name='contact[tags]' value='newsletter'>
+          <input
+            type='hidden'
+            name='contact[tags]'
+            value='language:{{- localization.language.iso_code -}}'
+          >
+          <input
+            data-input
+            id='email'
+            name='contact[email]'
+            aria-label='{{- 'general.footer.newsletter.email' | t -}}'
+            type='email'
+            class='text-xs h-10 w-full focus:outline-none border-transparent bg-transparent'
+            placeholder='{{- 'general.footer.newsletter.email' | t | upcase -}}'
+          >
+          <button
+            data-submit
+            disabled
+            class='opacity-30 transition-opacity duration-300 flex items-center px-3 -mr-3'
+            type='submit'
+            value='Submit'
+          >
+            {% render 'component.icon', type: 'arrow_right', class: 'h-3' %}
+          </button>
+        </div>
+      {%- endunless -%}
+      {%- if form.posted_successfully? -%}
+        <p class='mb-4'>{{- 'general.footer.newsletter.success' | t -}}</p>
+      {% endif %}
+    {%- endform -%}
+  </div>
+  <div class='flex flex-col lg:flex-row space-y-5 lg:space-y-0 mt-12 lg:mt-0 justify-between'>
+    {%- render : 'component.payment-icons', container_class: 'flex space-x-2', icon_width: 'w-10' -%}
+    {%- render : 'component.social-icons', container_class: 'flex flex-row space-x-2', icon_width: 'w-2' %}
+    <span class='text-xs opacity-80'>
+      {{- 'general.footer.copyright' | t: store: shop.name, year: year -}}
+    </span>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "footer_link_list",
+      "label": "Footer links"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,49 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders a radio input
+
+  About:
+    Render a radio input with a text label and enclosing div.
+
+  Accepts:
+    - label: {String} The label string for the radio. Also used as the input 'id' and label 'for'.
+
+  OPTIONAL:
+    - value: {String} (Default: label) Input value
+    - disabled: {Boolean} (Default: false) Whether the input should be disabled. Will add 'disabled' class to label.
+    - checked: {Boolean} (Default: false) Whether the radio input should be checked by default.
+    - name: {String} Input name
+    - container_class: {String} Additional class for enclosing container div
+    - input_class: {String} Additional class for input
+    - label_class: {String} Additional class for label
+    - attributes: {String} Additional attributes you want to add, like data-attributes
+
+  Usage:
+    {% render 'component.radio',
+      label: value,
+      name: 'color',
+      container_class: 'flex gap-2'
+    %}
+{%- endcomment -%}
+
+<div class='{{ container_class }}'>
+  <input
+    id='{{- label -}}'
+    type='radio'
+    class='{{- input_class -}}'
+    value='{{- value | default: label -}}'
+    {{ attributes }}
+    {% if name %}
+      name='{{- name -}}'
+    {% endif %}
+    {% if checked %}
+      checked
+    {% endif %}
+    {% if disabled %}
+      disabled
+    {% endif %}
+  >
+  <label class='{{- label_class }}{% if disabled %} disabled{% endif %}' for='{{- label -}}'>
+    {{- label -}}
+  </label>
+</div>

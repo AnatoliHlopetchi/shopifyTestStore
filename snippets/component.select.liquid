@@ -1,0 +1,78 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders a select
+
+  About:
+    Render a select dropdown
+
+  Accepts:
+    - options: {Shopify Object} The options to be embedded inside the select, captured in liquid first
+
+    OPTIONAL:
+    - name: {String} Input name, needed if used in form submissions
+    - label: {String} The label string for the select, it can be either the translation key or a hardcoded string
+    - label_class: {String} Additional class for label
+    - required: {Boolean} If the select input should be 'required'
+    - id: {String} ID of the select and label 'for'
+    - container_class: {String} Class for enclosing container div
+    - select_class: {String} Class for select tag
+    - placeholder: {String} Placeholder string option which is disabled by default, it can be either the translation key or a hardcoded string
+    - placeholder_class: {String} Placeholder option's class
+    - attributes: {String} Additional attributes you want to add, like data-attributes
+    - autocomplete: {String} Autocomplete value for the input
+
+  Usage:
+    {%- capture options -%}
+      {% for variant in product.variants %}
+        <option value='{{ variant.id }}'
+          {% if variant.id == current_variant.id %}selected{% endif %}
+          {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+      {% endfor %}
+    {%- endcapture -%}
+
+    {%- render 'component.select',
+      name: 'id',
+      options: options,
+      placeholder: 'Select Option',
+      select_class: 'no-js-elem',
+      required: true,
+      attributes: 'data-option-main'
+    -%}
+{%- endcomment -%}
+
+{% liquid
+  assign autocomplete = autocomplete | default: 'off'
+
+  assign translated_label = label | t
+  unless translated_label contains 'translation missing:'
+    assign label = translated_label
+  endunless
+
+  assign translated_placeholder = placeholder | t
+  unless translated_placeholder contains 'translation missing:'
+    assign placeholder = translated_placeholder
+  endunless
+%}
+
+<div class='relative after:absolute after:w-[10px] after:h-[10px] after:border-2 after:border-l-0 after:border-t-0 after:border-black after:rotate-45 after:pointer-events-none after:bottom-[1.4rem] after:right-4 {{ container_class }}'>
+  {% if label %}
+    <label for='{{ id }}' class='{{ label_class }}'>{{ label }}</label>
+  {% endif %}
+  <select
+    id='{{ id }}'
+    class='{{ select_class }}'
+    name='{{ name }}'
+    {{ attributes }}
+    autocorrect='{{ autocorrect }}'
+    {% if required %}
+      required aria-required='true'
+    {% endif %}
+  >
+    {% if placeholder -%}
+      <option class='{{ placeholder_class }}' disabled selected>
+        {{ placeholder }}
+      </option>
+    {%- endif %}
+    {{ options }}
+  </select>
+</div>

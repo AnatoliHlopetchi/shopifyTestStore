@@ -1,0 +1,64 @@
+<div class='mt-9 lg:mt-0 lg:w-full' data-component='orders'>
+  <h1 class='text-2xl lg:text-[40px]'>{{ 'customer.account.orders.page_title' | t }}</h1>
+  <div class='mt-9 lg:mt-12'>
+    {%- comment -%}customer.orders_count doesn't show test orders, so we use customer.orders.size here{%- endcomment -%}
+    {% if customer.orders.size == 0 %}
+      <p class=''>{{ 'customer.account.orders.no_orders_yet' | t }}</p>
+      {%
+        render 'component.button',
+        text: 'customer.account.orders.shop_now_button',
+        href: routes.root_url,
+        class: 'inline-block w-auto mt-9 text-center',
+        style: 'primary'
+      %}
+    {% else %}
+      {% for order in customer.orders %}
+        <div class='grid grid-rows-[1fr,auto,auto] lg:grid-cols-2 lg:grid-rows-[1fr,auto] gap-5 lg:gap-7 border-black {% if forloop.first %}pb-9 lg:pb-12 border-b-[1px]{% elsif forloop.last %}pt-9 lg:pt-12{% else %}py-9 lg:py-12 border-b-[1px]{% endif %}'>
+          <div class='flex flex-col gap-3'>
+            <p class='text-xl lg:text-2xl'>
+              {{ 'customer.account.orders.order_title' | t: name: order.name }}
+            </p>
+            <div class='flex'>
+              <p class='text-xs lg:text-sm pr-4 lg:pr-5'>
+                {{ order.created_at | date: "%d %B %Y" }}
+              </p>
+              <p class='text-xs lg:text-sm px-4 lg:px-5 border border-black border-[1px] border-t-0 border-b-0'>
+                {{ order.total_price | money }}
+              </p>
+              <p class='text-xs lg:text-sm pl-4 lg:pl-5'>
+                {{ 'customer.account.orders.order_items_count' | t: count: order.line_items.size }}
+              </p>
+            </div>
+          </div>
+          <div
+            data-order-slider
+            class='keen-slider flex overflow-hidden lg:row-start-2 lg:col-span-2'
+          >
+            {% for line_item in order.line_items %}
+              {% if line_item.image %}
+                <div class='w-32 keen-slider__slide cursor-grab'>
+                  {%-
+                    render 'component.image',
+                    img: line_item.image,
+                    max_width: 200,
+                    alt: line_item.title,
+                    placeholder: true
+                  -%}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class='flex lg:justify-end items-center'>
+            {%
+              render 'component.button',
+              text: 'customer.account.orders.view_order',
+              style: 'primary',
+              class: 'block',
+              href: order.order_status_url
+            %}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<section data-addresses class='mt-16 lg:mt-28'>
+  <h1 class='text-2xl lg:text-[40px]'>{{ 'customer.account.addresses.page_title' | t }}</h1>
+  {% if customer.addresses_count == 0 %}
+    <p class='mt-9 lg:mt-12'>{{ 'customer.account.addresses.no_addresses_yet' | t }}</p>
+  {% else %}
+    <div class='mt-9 lg:mt-12'>
+      {% for address in customer.addresses %}
+        <div class='mt-9' data-component='address'>
+          <h3 class='text-xl lg:text-2xl mb-4 lg:mb-7'>
+            {% if address == customer.default_address %} (Default) {% endif -%}
+            {{- address.address1 }}
+          </h3>
+          <p class='text-base lg:text-xl'>
+            {{ address.first_name }}
+            {{ address.last_name }}
+          </p>
+          <p class='text-base lg:text-xl'>{{ address.address1 }}</p>
+          <p class='text-base lg:text-xl'>{{ address.city }}</p>
+          <p class='text-base lg:text-xl'>{{ address.zip }}</p>
+          <p class='text-base lg:text-xl'>{{ address.country }}</p>
+          <p class='text-base lg:text-xl'>{{ address.phone }}</p>
+          <div class='flex gap-2'>
+            {% assign edit_button_attributes = "data-edit-address-button data-address-id='"
+              | append: address.id
+              | append: "'"
+            %}
+            {% render 'component.button',
+              text: 'customer.account.addresses.edit_address_button',
+              class: 'inline-block mt-6 lg:mt-7 px-4',
+              style: 'secondary',
+              attributes: edit_button_attributes
+            %}
+            {% unless customer.addresses_count == 1 %}
+              {% render 'component.button',
+                text: 'customer.account.addresses.delete_address_button',
+                class: 'inline-block mt-6 lg:mt-7 px-4',
+                style: 'secondary',
+                attributes: 'data-delete-address-button'
+              %}
+
+              <form
+                class='hidden'
+                method='post'
+                action='{{ routes.account_addresses_url }}/{{ address.id }}'
+                data-delete-address-form
+                id='delete-address-form--{{ address.id }}'
+              >
+                <input type='hidden' name='_method' value='delete'>
+              </form>
+
+              <div
+                data-delete-address-modal
+                data-close-modal
+                class='fixed z-50 inset-0 bg-black bg-opacity-0 flex justify-center items-center cursor-pointer pointer-events-none group open:bg-opacity-40 open:pointer-events-auto'
+              >
+                <div class='relative bg-white mx-4 pt-14 px-8 pb-6 lg:p-14 lg:pb-10 opacity-0 group-open:opacity-100'>
+                  <button data-close-modal class='absolute top-4 right-4 p-3 lg:p-5'>
+                    {% render 'component.icon', type: 'cross', class: 'w-4' %}
+                  </button>
+                  <h1 class='text-3xl'>
+                    {{ 'customer.account.addresses.delete_address_confirmation.title' | t }}
+                  </h1>
+                  <p class='my-8'>
+                    {{
+                      'customer.account.addresses.delete_address_confirmation.text'
+                      | t
+                      | newline_to_br
+                    }}
+                  </p>
+                  {% liquid
+                    assign address_id_attribute = 'data-delete-address-confirm data-address-id=' | append: address.id
+                  %}
+                  {% render 'component.button',
+                    text: 'customer.account.addresses.delete_address_confirmation.button',
+                    type: 'submit',
+                    class: 'inline-block lg:w-full px-4',
+                    style: 'primary',
+                    attributes: address_id_attribute
+                  %}
+                  <button data-close-modal class='block underline mt-2 py-2 mx-auto'>
+                    {{ 'customer.account.addresses.delete_address_confirmation.cancel' | t }}
+                  </button>
+                </div>
+              </div>
+            {% endunless %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  {% render 'component.button',
+    text: 'customer.account.addresses.add_address_button',
+    class: 'inline-block mt-6 lg:mt-7',
+    style: 'primary',
+    attributes: 'data-add-address-button'
+  %}
+</section>

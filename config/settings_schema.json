@@ -1,0 +1,167 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Ask Phill Starter",
+    "theme_version": "1.0.0",
+    "theme_author": "Shopify",
+    "theme_documentation_url": "https:\/\/www.askphill.com",
+    "theme_support_url": "https:\/\/support.shopify.com\/"
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social media links"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pintrest"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "Tik tok"
+      },
+      {
+        "type": "text",
+        "id": "social_linkedin",
+        "label": "Linkedin"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube",
+        "label": "Youtube"
+      },
+      {
+        "type": "text",
+        "id": "social_whatsapp",
+        "label": "Whatsapp"
+      }
+    ]
+  },
+  {
+    "name": "Scripts",
+    "settings": [
+      {
+        "type": "liquid",
+        "id": "scripts_head",
+        "label": "Head scripts",
+        "info": "You can also insert Liquid in this field"
+      },
+      {
+        "type": "liquid",
+        "id": "scripts_body_start",
+        "label": "Body start scripts",
+        "info": "You can also insert Liquid in this field"
+      },
+      {
+        "type": "liquid",
+        "id": "scripts_body_end",
+        "label": "Body end scripts",
+        "info": "You can also insert Liquid in this field"
+      }
+    ]
+  },
+  {
+    "name": "Payment icons",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Show Payment icons"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_ideal",
+        "label": "Ideal"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_klarna",
+        "label": "Klarna"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_paypal",
+        "label": "Paypal"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_mastercard",
+        "label": "Mastercard"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_visa",
+        "label": "Visa"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_bancontact",
+        "label": "Bancontact"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_applepay",
+        "label": "Apple pay"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_giropay",
+        "label": "Giro pay"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_sofort",
+        "label": "Sofort"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_amex",
+        "label": "Amex"
+      },
+      {
+        "type": "checkbox",
+        "id": "payment_maestro",
+        "label": "Maestro"
+      }
+    ]
+  },
+  {
+    "name": "favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "favicon"
+      }
+    ]
+  },
+  {
+    "name": "Wishlist",
+    "settings": [
+      {
+        "type": "text",
+        "id": "wishlist_endpoint",
+        "label": "Wishlist vercel api endpoint (dev vs live)",
+        "info": "Add https:\/\/ in front, remove trailing \/ at the end"
+      }
+    ]
+  }
+]

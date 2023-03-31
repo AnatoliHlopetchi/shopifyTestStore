@@ -1,0 +1,111 @@
+{%- liquid
+  assign s = section.settings
+  assign blog = s.blog | default: blog
+  assign articles = blog.articles
+-%}
+
+{%- if articles.size > 0 -%}
+  <section class='mx-4 my-4 lg:my-16 lg:mx-16'>
+    <div class='pb-10 lg:pb-16'>
+      {%- if s.title != '' or s.button_text != '' -%}
+        <div class='flex items-baseline justify-between'>
+          {%- if s.title != '' -%}
+            <{{ s.title_tag }} class='text-2xl'>
+              {{- s.title -}}
+            </{{ s.title_tag }}>
+          {%- endif -%}
+          {%- if s.button_url and s.button_text != '' -%}
+            {%- render 'component.button',
+              text: s.button_text,
+              style: 'secondary',
+              href: s.button_url
+            -%}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class='grid gap-y-12 lg:grid-cols-3 lg:gap-x-16'>
+      {%- for article in articles limit: 3 -%}
+        {%- render 'component.article-item', article: article -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "View all"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Pick blog"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title tag",
+      "default": "h4",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "P"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Posts"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["blog"]
+  }
+}
+{% endschema %}

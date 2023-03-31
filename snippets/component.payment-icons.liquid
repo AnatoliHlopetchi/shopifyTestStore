@@ -1,0 +1,57 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders enabled payment icons
+
+  About:
+    Renders all the enabled payment icons set in the theme settings
+
+  Accepts:
+    OPTIONAL
+    - container_class: {String} The classes applied to the container
+    - icon_width: {String} The width tailwind class applied to the icons
+
+  Usage:
+    {%-
+      render: 'component.payment-icons'
+    -%}
+{%- endcomment -%}
+
+{%- assign width = icon_width | default: 'w-10' -%}
+
+<div class='{{- container_class -}}'>
+  {%- liquid
+    if settings.payment_ideal
+      render 'component.icon', type: 'ideal', class: width
+    endif
+    if settings.payment_bancontact
+      render 'component.icon', type: 'bancontact', class: width
+    endif
+    if settings.payment_klarna
+      render 'component.icon', type: 'klarna', class: width
+    endif
+    if settings.payment_paypal
+      render 'component.icon', type: 'paypal', class: width
+    endif
+    if settings.payment_mastercard
+      render 'component.icon', type: 'mastercard', class: width
+    endif
+    if settings.payment_visa
+      render 'component.icon', type: 'visa', class: width
+    endif
+    if settings.payment_applepay
+      render 'component.icon', type: 'applepay', class: width
+    endif
+    if settings.payment_giropay
+      render 'component.icon', type: 'giropay', class: width
+    endif
+    if settings.payment_sofort
+      render 'component.icon', type: 'sofort', class: width
+    endif
+    if settings.payment_amex
+      render 'component.icon', type: 'amex', class: width
+    endif
+    if settings.payment_maestro
+      render 'component.icon', type: 'maestro', class: width
+    endif
+  -%}
+</div>

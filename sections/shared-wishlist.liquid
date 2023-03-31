@@ -1,0 +1,28 @@
+<div
+  data-component='sharedWishlist'
+  class='max-w-screen-xl mt-9 mx-4 lg:mx-auto lg:mt-11 group relative min-h-[50vh]'
+>
+  {% render 'component.loader',
+    class: 'w-16 absolute top-1/2 left-1/2 -translate-x-1/2 group-open:hidden',
+    attributes: 'data-loader'
+  %}
+  <h1
+    data-error-message
+    class='hidden text-3xl lg:text-4xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center'
+  >
+    {%- comment -%}Please ensure your client has a properly designed error message. This is just a Starter placeholder{%- endcomment -%}
+    {{- 'wishlist.shared_wishlist_error' | t -}}
+  </h1>
+  <div class='hidden group-open:flex flex-col'>
+    <h1 class='text-3xl lg:text-4xl'>{{- 'wishlist.shared_wishlist_title' | t -}}</h1>
+    <p data-item-count class='text-xs lg:text-base text-grey'>
+      {% comment %}Content will be added in shared-wishlist.js{% endcomment %}
+    </p>
+  </div>
+  <div
+    data-products-grid
+    class='hidden group-open:grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6'
+  >
+    {% comment %}Content will be added in shared-wishlist.js{% endcomment %}
+  </div>
+</div>

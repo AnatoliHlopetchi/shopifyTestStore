@@ -1,0 +1,285 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "4a0fdf28-6f5d-45d2-a33b-dd8b805db864": {
+      "type": "hero",
+      "settings": {
+        "title": "The crafted collection",
+        "subtitle": "Core essentials that embody timeless design, quality and sustainability.",
+        "button_text": "shop collection",
+        "button_url": "",
+        "image_mobile": "shopify:\/\/shop_images\/M_L_V1440X680_STILL_10.jpg",
+        "image_desktop": "shopify:\/\/shop_images\/D_L_V1440X680_STILL_10_a284b682-5015-47e5-a9df-b42bb368c279.jpg",
+        "lazyload_image": false,
+        "title_tag": "h4",
+        "overlay_opacity": 20
+      }
+    },
+    "0f03f805-a134-4190-ab9a-f88a9b1a44c0": {
+      "type": "collection-highlight",
+      "blocks": {
+        "3578a0a5-a6aa-41a5-8e46-934f43278be1": {
+          "type": "collection",
+          "settings": {
+            "collection": "upsell-products",
+            "title": "",
+            "title_tag": "p",
+            "button_text": "Go to collection",
+            "button_url": ""
+          }
+        },
+        "924ac6e4-2881-4cc1-a90e-a71d3c85145f": {
+          "type": "collection",
+          "settings": {
+            "collection": "upsell-products",
+            "title": "",
+            "title_tag": "p",
+            "button_text": "Go to collection",
+            "button_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "3578a0a5-a6aa-41a5-8e46-934f43278be1",
+        "924ac6e4-2881-4cc1-a90e-a71d3c85145f"
+      ],
+      "settings": {
+      }
+    },
+    "bcfb463a-d768-457e-99ad-dc6a2ee021f2": {
+      "type": "instagram",
+      "blocks": {
+        "6367dee4-0873-4cfc-b7be-cbf02ba28051": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Instagram_Post-1.png",
+            "link": ""
+          }
+        },
+        "b79452d0-972c-4be0-a579-304998c0db5c": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Instagram_Post-2.png",
+            "link": ""
+          }
+        },
+        "abb773df-ada5-4a79-97fd-c32bb2729af8": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Instagram_Post.png",
+            "link": ""
+          }
+        },
+        "b00ef729-bad5-4b6f-bc3d-e4323f784716": {
+          "type": "instagram",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Instagram_Post4.png",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "6367dee4-0873-4cfc-b7be-cbf02ba28051",
+        "b79452d0-972c-4be0-a579-304998c0db5c",
+        "abb773df-ada5-4a79-97fd-c32bb2729af8",
+        "b00ef729-bad5-4b6f-bc3d-e4323f784716"
+      ],
+      "settings": {
+        "title": "<p>Follow us on Instagram<\/p>",
+        "button_text": "Follow us",
+        "button_url": "https:\/\/askphill.com",
+        "title_tag": "h4"
+      }
+    },
+    "ac97c362-0859-458d-b4ec-3e13a67164a6": {
+      "type": "text-media",
+      "settings": {
+        "img": "shopify:\/\/shop_images\/Image_4.png",
+        "desktop_img": "shopify:\/\/shop_images\/Image_3.png",
+        "title": "Joy of sailing",
+        "title_tag": "h4",
+        "text": "<p>Sailing on a sailboat is an exhilarating and joyful experience that offers a unique perspective of the world. There is something magical about harnessing the power of the wind to glide gracefully through the water, feeling the cool breeze on your face and the gentle sway of the boat beneath your feet.<\/p>",
+        "button_text": "Button",
+        "button_url": "\/"
+      }
+    },
+    "2139a89e-6f21-4870-9ce7-53289db76e19": {
+      "type": "faq",
+      "blocks": {
+        "6d8c84b6-46b8-4aa9-a2ed-3a78e7058258": {
+          "type": "question",
+          "settings": {
+            "title": "What is Shopify, and what does it do?",
+            "answer": "<p>Shopify is an e-commerce platform that allows users to create an online store and sell products or services online. It provides a variety of features and tools that make it easy to manage and customize your online store, including website design templates, payment processing, order tracking, and inventory management.<\/p>"
+          }
+        },
+        "eaadd090-2f9b-4f9b-87ec-b7dbe9d8af1f": {
+          "type": "question",
+          "settings": {
+            "title": "How much does it cost to use Shopify?",
+            "answer": "<p>Shopify offers a range of pricing plans, starting with a basic plan at $29 per month, and going up to an advanced plan at $299 per month. There are also additional fees for transaction processing, shipping, and other features.<\/p>"
+          }
+        },
+        "69c347a0-4e42-4a9d-9176-4de1ef6f672e": {
+          "type": "question",
+          "settings": {
+            "title": "Is Shopify easy to use for beginners?",
+            "answer": "<p>Yes, Shopify is designed to be user-friendly and easy to use, even for beginners. It provides a range of templates and customization options, as well as a user-friendly interface and helpful resources like tutorials and support.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "6d8c84b6-46b8-4aa9-a2ed-3a78e7058258",
+        "eaadd090-2f9b-4f9b-87ec-b7dbe9d8af1f",
+        "69c347a0-4e42-4a9d-9176-4de1ef6f672e"
+      ],
+      "settings": {
+        "title": "Questions about product",
+        "title_tag": "h4"
+      }
+    },
+    "5c11416a-c9f8-4022-954e-2418e98b0fae": {
+      "type": "product-highlight",
+      "settings": {
+        "title": "Classic menswear of tomorrow",
+        "product": "black-belt-gold-buckle",
+        "image_mobile": "shopify:\/\/shop_images\/B2B_Shop-the-look_Outfit-3_02.webp",
+        "title_tag": "h4"
+      }
+    },
+    "d9ab32be-5505-4c15-a359-3761974fd2bf": {
+      "type": "rich-text",
+      "blocks": {
+        "ae259959-ea2d-4e69-9c1c-16953c42b526": {
+          "type": "title",
+          "settings": {
+            "title": "We work with superior quality products made by designers and manufacturers.",
+            "title_tag": "h4"
+          }
+        },
+        "70494687-dbce-4032-8ebb-f7f3962952be": {
+          "type": "content",
+          "settings": {
+            "content": "<p>Quality of light affects people in many different ways. A good lighting will positively impact your every day mood and enhance desirability of your interior. On top of the quality requirements we try to focus on products with a purpose. Behind each item we sell, there are real stories from real people. Buying these products is not just owning more stuff, it’s about diving into new experiences and being involved with creation.<\/p>"
+          }
+        },
+        "4fefcd30-151b-485a-9054-27b0e2971cd9": {
+          "type": "title",
+          "settings": {
+            "title": "Fueling small companies and achieving a fairer price for everyone",
+            "title_tag": "h4"
+          }
+        },
+        "6560c3e3-c7dc-4126-9bae-e08a3bd82020": {
+          "type": "content",
+          "settings": {
+            "content": "<p>You are not buying from a big retailer chain where the profit is shared between investors and shareholders and not with the makers, designers, employees. The money you will spend on Lamptwist is going directly from your pocket to the designer\/manufacturer of the lamp with a margin for our team, i.e : a small independent local shop of 3 people. Then buying our products is supporting local people and sustainable businesses.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "ae259959-ea2d-4e69-9c1c-16953c42b526",
+        "70494687-dbce-4032-8ebb-f7f3962952be",
+        "4fefcd30-151b-485a-9054-27b0e2971cd9",
+        "6560c3e3-c7dc-4126-9bae-e08a3bd82020"
+      ],
+      "settings": {
+      }
+    },
+    "7794dbec-30b4-4d1f-a39d-c88237b1c9af": {
+      "type": "quote",
+      "settings": {
+        "quote": "<p>Education is the beating heart of the hairdressing profession<\/p>",
+        "author": "Rob Peetoom",
+        "background_color": "#171719",
+        "text_color": "#ffffff",
+        "quote_tag": "h2"
+      }
+    },
+    "5049a39f-b2dd-4321-b5e4-4eec6190f4c2": {
+      "type": "usp",
+      "blocks": {
+        "65ce15c7-bc80-4c92-abe2-ad53d491b8fd": {
+          "type": "usp",
+          "settings": {
+            "link": "",
+            "text": "<p>Shipped free from €75,-<\/p>",
+            "image": "shopify:\/\/shop_images\/shipping.svg"
+          }
+        },
+        "2eedaad7-c6a2-4b20-bed9-624edda327ce": {
+          "type": "usp",
+          "settings": {
+            "link": "",
+            "text": "<p>We love to help you<\/p>",
+            "image": "shopify:\/\/shop_images\/phone.svg"
+          }
+        },
+        "4c99ce68-d5e0-4d63-8b98-a7c68673c84f": {
+          "type": "usp",
+          "settings": {
+            "link": "",
+            "text": "<p>Try our products for 30 days<\/p>",
+            "image": "shopify:\/\/shop_images\/hourglass.svg"
+          }
+        },
+        "932d5c60-a396-4786-b5e7-051aa0203ea1": {
+          "type": "usp",
+          "settings": {
+            "link": "",
+            "text": "<p>Ordered before 23:45 on working days, shipped today<\/p>",
+            "image": "shopify:\/\/shop_images\/delivery.svg"
+          }
+        }
+      },
+      "block_order": [
+        "65ce15c7-bc80-4c92-abe2-ad53d491b8fd",
+        "2eedaad7-c6a2-4b20-bed9-624edda327ce",
+        "4c99ce68-d5e0-4d63-8b98-a7c68673c84f",
+        "932d5c60-a396-4786-b5e7-051aa0203ea1"
+      ],
+      "settings": {
+      }
+    },
+    "539a744d-065f-44ce-8a1a-9cc9d70aeb3b": {
+      "type": "media",
+      "blocks": {
+        "06e2390a-2741-4660-8fec-df326e01f37c": {
+          "type": "media",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/B2B_Shop-the-look_Outfit-3_03.webp"
+          }
+        },
+        "31c2348d-b666-4bbd-8775-72728f784411": {
+          "type": "media",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/B2B_Shop-the-look_Outfit-3_02.webp"
+          }
+        }
+      },
+      "block_order": [
+        "06e2390a-2741-4660-8fec-df326e01f37c",
+        "31c2348d-b666-4bbd-8775-72728f784411"
+      ],
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "4a0fdf28-6f5d-45d2-a33b-dd8b805db864",
+    "0f03f805-a134-4190-ab9a-f88a9b1a44c0",
+    "bcfb463a-d768-457e-99ad-dc6a2ee021f2",
+    "ac97c362-0859-458d-b4ec-3e13a67164a6",
+    "2139a89e-6f21-4870-9ce7-53289db76e19",
+    "5c11416a-c9f8-4022-954e-2418e98b0fae",
+    "d9ab32be-5505-4c15-a359-3761974fd2bf",
+    "7794dbec-30b4-4d1f-a39d-c88237b1c9af",
+    "5049a39f-b2dd-4321-b5e4-4eec6190f4c2",
+    "539a744d-065f-44ce-8a1a-9cc9d70aeb3b"
+  ]
+}

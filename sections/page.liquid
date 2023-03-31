@@ -1,0 +1,22 @@
+<section class='min-h-screen items-center my-8 mx-8 lg:my-20 lg:mx-auto lg:max-w-lg'>
+  <h1 class='text-4xl pb-10 lg:pb-24 lg:text-7xl'>
+    {{- page.title | escape -}}
+  </h1>
+  <div class='text-base [&_h1]:text-lg [&_h2]:text-lg [&_h3]:text-lg [&_h4]:text-lg [&_h5]:text-lg [&_h6]:text-lg'>
+    {{- page.content -}}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page content",
+  "presets": [
+    {
+      "name": "Page Content"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["page"]
+  }
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "16603126701019178e": {
+      "type": "hero",
+      "settings": {
+        "title": "The crafted collection",
+        "subtitle": "Core essentials that embody timeless design, quality and sustainability.",
+        "button_text": "shop collection",
+        "button_url": "\/",
+        "image_mobile": "shopify:\/\/shop_images\/M_L_V1440X680_STILL_10.jpg",
+        "image_desktop": "shopify:\/\/shop_images\/D_L_V1440X680_STILL_10_a284b682-5015-47e5-a9df-b42bb368c279.jpg",
+        "lazyload_image": false,
+        "title_tag": "h4",
+        "overlay_opacity": 20
+      }
+    }
+  },
+  "order": [
+    "16603126701019178e"
+  ]
+}

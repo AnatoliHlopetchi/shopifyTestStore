@@ -1,0 +1,103 @@
+<div data-component='register' class='max-w-sm mx-4 26rem:mx-auto mt-12 mb-7 lg:my-32'>
+  <h1 class='text-5xl'>{{- 'customer.register.heading' | t -}}</h1>
+  <p class='mt-4'>{{- 'customer.register.subheading' | t -}}</p>
+
+  {%- form 'create_customer', class: 'mt-16' -%}
+    {%-
+      render 'component.input',
+      label: 'customer.register.first_name',
+      placeholder: 'customer.register.first_name',
+      id: 'RegisterForm-FirstName',
+      name: 'customer[first_name]',
+      autocomplete: 'given-name',
+      required: true,
+    -%}
+
+    {%-
+      render 'component.input',
+      label: 'customer.register.last_name',
+      placeholder: 'customer.register.last_name',
+      id: 'RegisterForm-LastName',
+      name: 'customer[last_name]',
+      autocomplete: 'family-name',
+      container_class: 'mt-4'
+    -%}
+
+    {% liquid
+      assign email_label_class = ""
+      assign email_input_class = ""
+      if form.errors contains 'email'
+        assign email_attributes = 'aria-invalid="true" aria-describedby="RegisterForm-email-error" autofocus'
+        assign email_label_class = "text-alert"
+        assign email_input_class = "border-alert"
+      endif
+    %}
+
+    {%-
+      render 'component.input',
+      label: 'customer.register.email',
+      placeholder: 'customer.register.email',
+      id: 'RegisterForm-email',
+      name: 'customer[email]',
+      autocomplete: 'email',
+      required: true,
+      attributes: email_attributes,
+      input_class: email_input_class,
+      label_class: email_label_class,
+      container_class: 'mt-4'
+    -%}
+
+    {% liquid
+      assign password_label_class = ""
+      assign password_input_class = ""
+      if form.errors contains 'password'
+        assign password_attributes = 'aria-invalid="true" aria-describedby="RegisterForm-password-error" autofocus'
+        assign password_label_class = "text-alert"
+        assign password_input_class = "border-alert"
+      endif
+    %}
+
+    {%-
+      render 'component.input',
+      label: 'customer.register.password',
+      placeholder: 'customer.register.password',
+      id: 'RegisterForm-password',
+      name: 'customer[password]',
+      type: 'password',
+      autocomplete: 'password',
+      required: true,
+      attributes: password_attributes,
+      input_class: password_input_class,
+      label_class: password_label_class,
+      container_class: 'mt-4'
+    -%}
+
+    {% render 'component.form-errors' with form_errors: form.errors %}
+
+    {%-
+      render 'component.checkbox',
+      label: 'customer.register.subscribe_newsletter',
+      id: 'SubscribeNewsletter',
+      name: 'customer[accepts_marketing]',
+      container_class: 'mt-6 mb-3'
+    -%}
+
+    {%-
+      render 'component.checkbox',
+      label: 'customer.register.terms_and_conditions_html',
+      id: 'AcceptsTerms',
+      name: 'customer[accepts_terms]',
+      required: true,
+      container_class: 'mt-3'
+    -%}
+
+    <input
+      type='submit'
+      value='{{ 'customer.register.submit_button' | t }}'
+      class='py-3 mt-6 w-full cursor-pointer font-normal bg-primary text-white hover:bg-primary/90 focus:bg-primary/90'
+    >
+  {%- endform -%}
+  <span class='flex justify-center mt-6 gap-1'>
+    {{- 'customer.register.return_to_login_html' | t -}}
+  </span>
+</div>

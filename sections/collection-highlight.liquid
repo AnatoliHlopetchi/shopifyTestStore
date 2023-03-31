@@ -1,0 +1,134 @@
+{%- liquid
+  capture wrapper_class
+    if section.blocks.size == 1
+      echo 'lg:grid-cols-1'
+    else
+      echo 'lg:grid-cols-2 lg:gap-2'
+    endif
+  endcapture
+-%}
+
+<section class='lg:grid {{ wrapper_class }}'>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+      assign title = b.title | default: b.collection.title
+      assign url = b.button_url | default: b.collection.url
+    -%}
+    <div class='relative'>
+      <a href='{{- url -}}'>
+        {%- render 'component.image',
+          img: b.collection.image,
+          alt: title,
+          img_class: 'object-cover'
+        -%}
+      </a>
+      <div class='absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 flex flex-col gap-5 lg:gap-4 items-center'>
+        {%- if title != '' -%}
+          <{{ b.title_tag }} class='text-white text-center text-4xl lg:text-5xl'>
+            {{- title -}}
+          </{{ b.title_tag }}>
+        {%- endif -%}
+        {%- if b.button_text != '' %}
+          {%- render 'component.button',
+            text: b.button_text,
+            href: url,
+            class: 'inline-block',
+            style: 'primary'
+          -%}
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Collection highlight",
+  "blocks": [
+    {
+      "name": "Collection highlight",
+      "type": "collection",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "header",
+          "content": "collection"
+        },
+        {
+          "id": "collection",
+          "type": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "header",
+          "content": "title"
+        },
+        {
+          "id": "title",
+          "type": "textarea",
+          "label": "Title",
+          "info": "By default (no title specified) the title of the collection will be displayed"
+        },
+        {
+          "type": "select",
+          "id": "title_tag",
+          "label": "Title tag",
+          "default": "p",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            },
+            {
+              "value": "p",
+              "label": "P"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "button"
+        },
+        {
+          "id": "button_text",
+          "type": "text",
+          "label": "Button text",
+          "info": "If no button text is specified no button will be displayed"
+        },
+        {
+          "id": "button_url",
+          "type": "url",
+          "label": "Button link",
+          "info": "By default (no link specified) the whole block and the button redirect to the collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection highlight"
+    }
+  ]
+}
+{% endschema %}

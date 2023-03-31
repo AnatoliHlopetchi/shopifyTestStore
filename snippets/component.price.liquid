@@ -1,0 +1,47 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders product price and compare at price
+
+  About:
+    Render product price and compare at price spans. You can pass either the whole product object or just price and compare_at_price strings.
+
+  Accepts:
+    - product: {Object} The product or variant object that has the .compare_at_price and .price methods to get the price and compare at price
+    or
+    - price: {Number} The price to render (will be converted with the money filter)
+    - compare_at: {Number} The compare at price to render (will be converted with the money filter)
+
+    OPTIONAL
+    - has_data_attributes: {Boolean} (Default: false) If enabled, price and compare_at_price spans will have the data attributes required for update-prices.js to update prices on variant change.
+
+  Usage:
+    {%- render 'component.price', price: item.final_line_price, compare_at: item.original_line_price -%}
+    {%- render 'component.price', product: current_variant, has_data_attributes: true -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign price = price | default: product.price
+  assign compare_at = compare_at | default: product.compare_at_price
+  assign has_data_attributes = has_data_attributes | default: false
+-%}
+
+<div class=''>
+  <span
+    class=''
+    {% if has_data_attributes %}
+      data-price
+    {% endif %}
+  >
+    {{- price | money -}}
+  </span>
+  {%- if compare_at > price or has_data_attributes -%}
+    <span
+      class='line-through ml-2 opacity-60'
+      {% if has_data_attributes %}
+        data-compare-at-price
+      {% endif %}
+    >
+      {{- compare_at | money -}}
+    </span>
+  {%- endif -%}
+</div>

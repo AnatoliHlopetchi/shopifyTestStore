@@ -1,0 +1,21 @@
+{%- liquid
+  case template.name
+    when 'product'
+      assign template_script = 'product.js'
+    when 'collection'
+      assign template_script = 'collection.js'
+    else
+      assign template_script = nil
+  endcase
+
+  if template.directory == 'customers'
+    assign template_script = 'account.js'
+  endif
+-%}
+
+<script src='{{- 'index.js' | asset_url -}}' defer></script>
+<script src='{{- 'base.js' | asset_url -}}' defer></script>
+
+{%- if template_script -%}
+  <script src='{{- template_script | asset_url -}}' defer></script>
+{%- endif -%}

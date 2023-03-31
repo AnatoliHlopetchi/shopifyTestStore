@@ -1,0 +1,26 @@
+{%- if section.blocks.size > 0 -%}
+  <div
+    data-suggested-search-terms
+    class='{% if only_show_results %}hidden{% endif %}'
+  >
+    <h2 class='uppercase text-base'>
+      {{- s.suggested_search_terms_title -}}
+    </h2>
+    <div class='grid grid-cols-2 lg:flex lg:space-x-8 mt-3'>
+      {%- for block in section.blocks -%}
+        <button
+          data-component='suggestedSearchTerm'
+          data-suggested-search-button
+          data-search-term='{{- block.settings.text -}}'
+          type='button'
+          class='text-left w-fit py-2.5 flex items-center space-x-2 text-grey'
+        >
+          {%- render 'component.icon', type: 'search', class: 'w-3' -%}
+          <span class='text-sm'>
+            {{- block.settings.text -}}
+          </span>
+        </button>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}

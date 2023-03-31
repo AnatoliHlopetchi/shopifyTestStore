@@ -1,0 +1,14 @@
+{
+  "Create new component": {
+    "prefix": ["co", "comp"],
+    "body": ["export default window.component((node, ctx) => {", " $1", "})"],
+    "description": "Insert component markup"
+  },
+  "Assign variable with no tags": {
+    "prefix": "avnt",
+    "body": [
+      "assign ${1:variable} = ${2:s}.${3:variable}"
+    ],
+    "description": "Assgin variables with no tags"
+  }
+}

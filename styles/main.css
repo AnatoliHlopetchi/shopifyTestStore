@@ -1,0 +1,23 @@
+@import 'components/skip-to-content.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+/* When adding fonts also preload fonts in theme.liquid */
+@layer base {
+  @font-face {
+    font-display: swap;
+    font-family: 'Circular';
+    font-weight: 300;
+    src: url('circular-book.woff2') format('woff2'), url('circular-book.woff') format('woff')
+  }
+  @font-face {
+    font-display: swap;
+    font-family: 'Circular';
+    font-style: italic;
+    font-weight: 500;
+    src: url('circular-medium-italic.woff2') format('woff2'), url('circular-medium-italic.woff') format('woff');
+  }
+}

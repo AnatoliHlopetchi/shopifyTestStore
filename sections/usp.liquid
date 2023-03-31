@@ -1,0 +1,77 @@
+{%- liquid
+  assign modulo = section.blocks.size | modulo: 2
+
+  if modulo == 1
+    assign col_class = 'last-of-type:col-span-2 lg:last-of-type:col-span-1'
+  endif
+-%}
+
+<section
+  style='--gridColumns: repeat({{ section.blocks.size }}, minmax(0, 1fr));'
+  class='grid grid-cols-[var(--gridColumns)] gap-x-10 gap-y-12 px-8 mt-12 mb-12 w-full'
+>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+    -%}
+    {%- if b.image and b.usp_text != '' -%}
+      {%- liquid
+        if b.link
+          assign tag = 'a'
+          assign attr = 'href="' | append: b.link | append: '"'
+        else
+          assign tag = 'div'
+        endif
+      -%}
+      <{{ tag }} {{ attr }} class='flex flex-col justify-start items-center {{ col_class }}'>
+        <div class='pb-6 lg:pb-8'>
+          {%- render 'component.image',
+            img: b.image,
+            class: 'h-14 w-14 lg:w-20 lg:h-20',
+            placeholder: false,
+            disable_aspect_ratio: true
+          -%}
+        </div>
+        <span class='text-center w-32 lg:w-36'>
+          {{- b.text -}}
+        </span>
+      </{{ tag }}>
+    {%- endif -%}
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Usps",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "name": "Usp",
+      "type": "usp",
+      "settings": [
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Please upload all usp's as SVG's with the same aspect ratio"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Usp section"
+    }
+  ]
+}
+{% endschema %}

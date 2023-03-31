@@ -1,0 +1,6 @@
+{%- liquid
+  assign locale = request.locale.iso_code
+  assign real_identifier = identifier | append: '-' | append: locale
+
+  echo section.settings[real_identifier] | default: section.settings[identifier]
+-%}

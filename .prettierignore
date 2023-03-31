@@ -1,0 +1,11 @@
+node_modules/
+package-lock.json
+README.md
+assets
+assets/*
+.dev/
+.github/
+.vscode/
+config/
+locales/
+templates/*.json

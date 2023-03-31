@@ -1,0 +1,210 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<div class='flex lg:hidden h-full' data-component='mobileMenu'>
+  <button data-mobile-menu-toggle type='button' class='px-3 -ml-3'>
+    {%- render 'component.icon',
+      type: 'burger_menu',
+      class: 'w-4',
+      attributes: 'data-mobile-menu-toggle'
+    -%}
+  </button>
+  <button data-search-toggle type='button' class='px-3'>
+    {%- render 'component.icon', type: 'search', class: 'w-4' -%}
+  </button>
+
+  <div data-mobile-menu-container class='group'>
+    <button
+      data-mobile-menu-toggle
+      type='button'
+      class='fixed z-30 inset-0 bg-black pointer-events-none group-open:pointer-events-auto group-open:opacity-50 opacity-0 duration-500 transition-opacity cursor-pointer'
+    ></button>
+    <div class='fixed z-30 top-0 left-0 right-5 lg:right-0 bottom-0 lg:bottom-16 -translate-x-full lg:translate-x-0 group-open:translate-x-0 lg:-translate-y-full lg:group-open:translate-y-0 bg-white transition-transform duration-500 pt-0 overflow-hidden'>
+      <div class='sticky top-0 z-10 bg-white border-b h-mobileHeader'>
+        <button data-mobile-menu-toggle type='button' class='px-4 h-full'>
+          {%- render 'component.icon', type: 'cross', class: 'w-4' -%}
+        </button>
+      </div>
+      <div
+        data-mobile-menu
+        class='group-two flex w-[200%] overflow-hidden ease-in-out-quad duration-300 transition-transform open:-translate-x-1/2 h-mobileMenuHeight'
+      >
+        <div class='w-[calc(100%-20px)] overflow-y-scroll'>
+          <div class='flex flex-col px-5'>
+            {% for block in section.blocks %}
+              {%- liquid
+                assign b = block.settings
+              -%}
+              {%- case block.type -%}
+                {%- when 'simple_url' -%}
+                  {% if b.title != blank %}
+                    <a
+                      href='{{- b.url -}}'
+                      class='border-b text-2xl leading-none py-6'
+                    >
+                      {{- b.title -}}
+                    </a>
+                  {% endif %}
+                {%- else -%}
+                  {% if b.title != blank %}
+                    <button
+                      data-mobile-nested-menu-button
+                      type='button'
+                      data-menu-id='{{- block.id -}}'
+                      class='flex justify-between items-center border-b text-left text-2xl leading-none py-6'
+                    >
+                      {{- b.title -}}
+                      {%- render 'component.icon', type: 'chevron_arrow_right', class: 'h-3.5' -%}
+                    </button>
+                  {% endif %}
+              {%- endcase -%}
+            {% endfor %}
+            <ul class='grid'>
+              <li class='border-b'>
+                <a
+                  class='text-base leading-none block py-7'
+                  href='{% if customer %}{{- routes.account_url -}}{% else %}{{- routes.account_login_url -}}{% endif %}'
+                >
+                  {%- if customer -%}
+                    {{- 'customer.header.view_account' | t -}}
+                  {%- else %}
+                    {{- 'customer.header.sign_in' | t -}}
+                  {%- endif -%}
+                </a>
+              </li>
+              {%- if linklists[s.mobile_menu_footer_link_list] -%}
+                {% for link in linklists[s.mobile_menu_footer_link_list].links %}
+                  <li class='border-b'>
+                    <a class='text-base leading-none block py-7' href='{{- link.url -}}'>
+                      {{- link.title -}}
+                    </a>
+                  </li>
+                {% endfor %}
+              {%- endif -%}
+            </ul>
+          </div>
+        </div>
+        <div class='relative w-[calc(100%-20px)] overflow-y-scroll pointer-events-none group-two-open:pointer-events-auto'>
+          {% for block in section.blocks %}
+            {%- liquid
+              assign b = block.settings
+            -%}
+            {% if block.type == 'menu' %}
+              <div
+                data-mobile-nested-menu
+                id='{{- block.id -}}'
+                class='hidden absolute bg-white inset-0 px-5'
+              >
+                <button
+                  data-mobile-nested-menu-back-button
+                  class='sticky top-0 z-10 bg-white flex items-center w-full text-xs leading-none py-5 border-b space-x-3'
+                >
+                  {%- render 'component.icon',
+                    type: 'chevron_arrow_right',
+                    class: 'h-3.5 rotate-180'
+                  -%}
+                  <span>{{- 'general.header.mobile_nested_menu_back_button' | t -}}</span>
+                </button>
+                {%- comment -%}Menu links{%- endcomment -%}
+                <div class='grid gap-7 py-6'>
+                  {% for link in linklists[b.link_list].links %}
+                    <div>
+                      {%- liquid
+                        if link.url == '#'
+                          assign tag = 'span'
+                        else
+                          assign tag = 'a'
+                          assign attributes = 'href="' | append: link.url | append: '"'
+                        endif
+                      -%}
+                      <{{ tag }} class='text-black' {{ attributes }}>
+                        {{- link.title -}}
+                      </{{ tag }}>
+                      {% if link.links != blank %}
+                        <ul class='grid gap-2 mt-2'>
+                          {% for child_link in link.links %}
+                            <li>
+                              <a
+                                href='{{- child_link.url -}}'
+                                class='text-black opacity-70 text-sm'
+                              >
+                                {{- child_link.title -}}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      {%- comment -%}mobile menu footer{%- endcomment -%}
+      <div class='sticky z-10 bg-white bottom-0 left-0 right-0 grid grid-cols-[1fr,1px,1fr] border-t h-mobileMenuFooter'>
+        {%- form 'localization', data-component: 'countryForm', class: 'relative w-full h-full' -%}
+          {% render 'component.icon',
+            type: 'globe',
+            class: 'w-4 rotate-90 -translate-y-1/2 absolute left-5 top-1/2 pointer-events-none'
+          %}
+          <select
+            class='h-full w-full appearance-none bg-none text-xs text-center'
+            name='country_code'
+            data-country-select
+          >
+            {%- for country in localization.available_countries -%}
+              <option
+                value='{{- country.iso_code -}}'
+                {%- if country.iso_code == localization.country.iso_code %}
+                  selected='selected'
+                {%- endif -%}
+              >
+                {{ country.name }}
+              </option>
+            {%- endfor -%}
+          </select>
+          {% render 'component.icon',
+            type: 'arrow',
+            class: 'w-2.5 rotate-90 -translate-y-1/2 absolute right-5 top-1/2 pointer-events-none'
+          %}
+        {% endform %}
+        <div class='w-px bg-lightGrey'></div>
+        {% if localization.available_languages.size > 1 %}
+          {% form 'localization', data-component: 'languageForm', class: 'relative h-full' %}
+            <select
+              class='h-full w-full appearance-none text-xs text-center bg-none'
+              name='language_code'
+              data-language-select
+            >
+              {%- for language in localization.available_languages -%}
+                <option
+                  value='{{- language.iso_code -}}'
+                  {% if language.iso_code == localization.language.iso_code %}
+                    aria-current='true'
+                    selected='selected'
+                  {% endif %}
+                  hreflang='{{ language.iso_code }}'
+                  lang='{{ language.iso_code }}'
+                  data-value='{{ language.iso_code }}'
+                >
+                  {{ language.endonym_name | capitalize }}
+                </option>
+              {%- endfor -%}
+            </select>
+            {% render 'component.icon',
+              type: 'arrow',
+              class: 'w-2.5 rotate-90 -translate-y-1/2 absolute right-5 top-1/2 pointer-events-none'
+            %}
+          {% endform %}
+        {% else %}
+          {%- comment -%}if a market only has 1 language, without a proper design for now we're just rendering the single language centered{%- endcomment -%}
+          <p class='text-xs flex justify-center items-center'>
+            {{ localization.available_languages[0].endonym_name }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

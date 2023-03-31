@@ -1,0 +1,93 @@
+{%- capture radio -%}
+  {% for option in product.options_with_values %}
+    <div>
+      <div data-option-radio data-index='{{ forloop.index0 }}'>
+        {% for value in option.values %}
+          {%- liquid
+            if option.selected_value == value
+              assign checked = true
+            else
+              assign checked = false
+            endif
+          -%}
+          {%-
+            render 'component.radio' with
+            label: value,
+            value: value,
+            name: option.name,
+            checked: checked
+          -%}
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+{%- endcapture -%}
+
+{%- capture select -%}
+  {% for option in product.options_with_values %}
+    {%- liquid
+      assign attributes = 'data-option-select data-index="' | append: forloop.index0 | append: '"'
+    -%}
+    <div>
+      <div class='product__variant-wrapper'>
+        {%- capture options -%}
+          {%- for value in option.values -%}
+            <option
+              value='{{- value -}}'
+              {% if option.selected_value == value %}
+                selected
+              {% endif %}
+            >
+              {{- value -}}
+            </option>
+          {%- endfor -%}
+        {%- endcapture -%}
+
+        {%
+          render 'component.select',
+          name: option.name,
+          options: options,
+          attributes: attributes
+        %}
+      </div>
+    </div>
+  {% endfor %}
+{%- endcapture -%}
+
+<div class='product-options-wrapper rel'>
+  {% unless product.has_only_default_variant %}
+    <div class='js-only-elem'>
+      <div class='product-options__header'>
+        <p class='product-options__title'>{{- selectSize -}}</p>
+      </div>
+      {%- liquid
+        echo [option_type] | default: radio
+      -%}
+    </div>
+  {% endunless %}
+
+  {%- capture options -%}
+    {% for variant in product.variants %}
+      <option
+        value='{{ variant.id }}'
+        {% if variant.id == current_variant.id %}
+          selected
+        {% endif %}
+        {% unless variant.available %}
+          disabled
+        {% endunless %}
+      >
+        {{- variant.title -}}
+      </option>
+    {% endfor %}
+  {%- endcapture -%}
+  {%-
+    render 'component.select'
+    name: 'id',
+    options: options,
+    placeholder: 'Select Option',
+    container_class: 'no-js-elem',
+    required: true,
+    attributes: 'data-option-main'
+  -%}
+</div>

@@ -1,0 +1,60 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "string",
+          "settings": {
+            "text": "{{ product.vendor }}"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "prices": {
+          "type": "prices",
+          "settings": {}
+        },
+        "variants": {
+          "type": "variants",
+          "settings": {
+            "type": "radio"
+          }
+        },
+        "cta": {
+          "type": "cta",
+          "settings": {}
+        },
+        "how_to": {
+          "type": "tab",
+          "settings": {
+            "title": "How to use {{ product.title }}",
+            "content": "<p>More text goes <strong>here, </strong>especially for these components, we really want a lot of text - to really see all the text!</p>",
+            "open": false
+          }
+        },
+        "e15e6345-cfa9-4266-a884-84ab0141cf9a": {
+          "type": "tab",
+          "settings": {
+            "title": "New tab",
+            "content": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vitae scelerisque nisl, ac ultricies tellus. Nunc libero velit, dictum gravida ex et, dictum sollicitudin quam. Nulla facilisi. Nullam velit sapien, facilisis scelerisque fermentum et, tempus quis purus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel dui sit amet purus finibus accumsan vitae sit amet velit. Quisque commodo, tellus nec bibendum sodales, tellus ipsum convallis sapien, nec molestie metus massa ut ipsum. Phasellus nisi nulla, pulvinar a erat ut, sagittis scelerisque nisl. Suspendisse potenti. Fusce pharetra, justo eget vehicula vulputate, ante quam hendrerit elit, auctor pharetra nibh justo eu dui. Mauris mattis vulputate ultricies. Morbi et massa quis quam iaculis facilisis at maximus ipsum.</p><p>Vestibulum et auctor quam. Nulla elementum augue sit amet justo finibus, in faucibus purus tempor. Proin bibendum tincidunt lacinia. Nunc ligula purus, commodo sit amet mauris quis, accumsan euismod libero. Ut lobortis lorem nec condimentum lacinia. Nullam vitae efficitur elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris vel interdum lorem. Mauris accumsan massa justo, non facilisis velit pulvinar eget. Vivamus vel vehicula tellus. Nunc eu diam id eros ullamcorper tempus vel at elit.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "prices",
+        "variants",
+        "cta",
+        "how_to",
+        "e15e6345-cfa9-4266-a884-84ab0141cf9a"
+      ],
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

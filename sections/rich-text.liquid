@@ -1,0 +1,98 @@
+<section class='mx-4 lg:mx-auto lg:max-w-4xl'>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign b = block.settings
+    -%}
+    {%- case block.type -%}
+      {%- when 'title' -%}
+        {%- if b.title != '' -%}
+          <div class='mb-4 last-of-type:mb-0'>
+            <{{ b.title_tag }} class='text-2xl'>
+              {{- b.title -}}
+            </{{ b.title_tag }}>
+          </div>
+        {%- endif -%}
+      {%- when 'content' -%}
+        {%- if b.content != '' -%}
+          <div class='mb-4 last-of-type:mb-0'>
+            {{ b.content }}
+          </div>
+        {%- endif -%}
+    {%- endcase -%}
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "blocks": [
+    {
+      "type": "title",
+      "name": "Heading",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "header",
+          "content": "Settings"
+        },
+        {
+          "type": "select",
+          "id": "title_tag",
+          "label": "Title tag",
+          "default": "h4",
+          "options": [
+            {
+              "value": "h1",
+              "label": "H1"
+            },
+            {
+              "value": "h2",
+              "label": "H2"
+            },
+            {
+              "value": "h3",
+              "label": "H3"
+            },
+            {
+              "value": "h4",
+              "label": "H4"
+            },
+            {
+              "value": "h5",
+              "label": "H5"
+            },
+            {
+              "value": "h6",
+              "label": "H6"
+            },
+            {
+              "value": "p",
+              "label": "P"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "content",
+      "name": "Content",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rich text"
+    }
+  ]
+}
+{% endschema %}

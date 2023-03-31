@@ -1,0 +1,169 @@
+{
+  "current": {
+    "social_twitter": "http:\/\/www.twitter.com",
+    "social_facebook": "http:\/\/www.facebook.com",
+    "social_instagram": "http:\/\/www.instagram.com",
+    "social_linkedin": "http:\/\/www.linkedin.com",
+    "payment_ideal": false,
+    "payment_klarna": true,
+    "payment_paypal": true,
+    "payment_mastercard": true,
+    "payment_visa": true,
+    "payment_applepay": true,
+    "sections": {
+      "header": {
+        "type": "header",
+        "blocks": {
+          "d50615a7-10e1-4554-be77-74f992efd376": {
+            "type": "menu",
+            "settings": {
+              "title": "Men",
+              "url": "",
+              "link_list": "header-men",
+              "card_image": "shopify:\/\/shop_images\/D_L_V1440X680_STILL_10_a284b682-5015-47e5-a9df-b42bb368c279.jpg",
+              "card_text": "Some flavour text",
+              "card_cta": "Shop now",
+              "card_url": "shopify:\/\/collections\/frontpage"
+            }
+          },
+          "939c43a2-d4f2-499c-bc2f-aa2dff7baa37": {
+            "type": "menu",
+            "settings": {
+              "title": "Kids",
+              "url": "",
+              "link_list": "header-kids",
+              "card_image": "shopify:\/\/shop_images\/pride-dog.jpg",
+              "card_text": "",
+              "card_cta": "Shop now",
+              "card_url": ""
+            }
+          },
+          "ee6cbfd0-9d7c-4f43-b504-222cfb4cbe12": {
+            "type": "menu",
+            "settings": {
+              "title": "Women",
+              "url": "shopify:\/\/collections\/frontpage",
+              "link_list": "header-long",
+              "card_image": "shopify:\/\/shop_images\/hero_desktop.jpg",
+              "card_text": "The Marathon Collection",
+              "card_cta": "Shop now",
+              "card_url": "shopify:\/\/collections\/best-sellers"
+            }
+          }
+        },
+        "block_order": [
+          "d50615a7-10e1-4554-be77-74f992efd376",
+          "939c43a2-d4f2-499c-bc2f-aa2dff7baa37",
+          "ee6cbfd0-9d7c-4f43-b504-222cfb4cbe12"
+        ],
+        "settings": {
+          "mobile_menu_footer_link_list": "footer"
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "footer_link_list": "footer"
+        }
+      },
+      "predictive-search": {
+        "type": "predictive-search",
+        "blocks": {
+          "43e1a688-0bd8-4fa9-b4ec-ca2dede4759d": {
+            "type": "suggestion",
+            "settings": {
+              "text": "black edition"
+            }
+          },
+          "d3e5612d-f6f3-4520-86ee-5f1d87d2b0ac": {
+            "type": "suggestion",
+            "settings": {
+              "text": "suit"
+            }
+          },
+          "aaeb904e-2dfe-4953-95b0-a089f7ecc597": {
+            "type": "suggestion",
+            "settings": {
+              "text": "hoodie"
+            }
+          },
+          "3b48a719-b08a-473d-b967-5ef33a1bb299": {
+            "type": "suggestion",
+            "settings": {
+              "text": "t-shirt"
+            }
+          },
+          "42d1d557-344d-480d-a327-08a31bf7c4ef": {
+            "type": "suggestion",
+            "settings": {
+              "text": "cool"
+            }
+          }
+        },
+        "block_order": [
+          "43e1a688-0bd8-4fa9-b4ec-ca2dede4759d",
+          "d3e5612d-f6f3-4520-86ee-5f1d87d2b0ac",
+          "aaeb904e-2dfe-4953-95b0-a089f7ecc597",
+          "3b48a719-b08a-473d-b967-5ef33a1bb299",
+          "42d1d557-344d-480d-a327-08a31bf7c4ef"
+        ],
+        "settings": {
+          "suggested_search_terms_title": "Trending",
+          "featured_collection": "best-sellers",
+          "featured_collection_title": "Bestsellers",
+          "featured_collection_limit": 4,
+          "only_show_available": true,
+          "debounce_delay": 500
+        }
+      },
+      "wishlist-drawer": {
+        "type": "wishlist-drawer",
+        "blocks": {
+          "49452735-b262-4a25-92d7-69950476881d": {
+            "type": "button",
+            "settings": {
+              "link": "shopify:\/\/collections\/best-sellers",
+              "title": "Discover"
+            }
+          },
+          "d2c7a6f0-4ab5-40cb-a08e-f40aeedba533": {
+            "type": "two_cards",
+            "settings": {
+              "image_1": "shopify:\/\/shop_images\/pride-dog.jpg",
+              "link_1": "shopify:\/\/collections",
+              "title_1": "Card 1 title",
+              "image_2": "shopify:\/\/shop_images\/rainbow-hands-heart.jpg",
+              "link_2": "shopify:\/\/collections\/frontpage",
+              "title_2": "Card 2 title"
+            }
+          },
+          "6a5117a7-1f9a-4c1b-b90f-80eba8a3869a": {
+            "type": "one_large_card",
+            "settings": {
+              "image": "shopify:\/\/shop_images\/D_L_V1440X680_STILL_10_a284b682-5015-47e5-a9df-b42bb368c279.jpg",
+              "link": "shopify:\/\/collections\/frontpage",
+              "cta": "Discover",
+              "title": "Big CTA"
+            }
+          }
+        },
+        "block_order": [
+          "49452735-b262-4a25-92d7-69950476881d",
+          "d2c7a6f0-4ab5-40cb-a08e-f40aeedba533",
+          "6a5117a7-1f9a-4c1b-b90f-80eba8a3869a"
+        ],
+        "settings": {
+          "share_wishlist_url": "shared-wishlist"
+        }
+      }
+    },
+    "content_for_index": [
+
+    ]
+  }
+}

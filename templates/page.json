@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+      }
+    },
+    "3153c2b7-0726-497d-9087-2c8274133ff3": {
+      "type": "page",
+      "settings": {
+      }
+    }
+  },
+  "order": [
+    "main",
+    "3153c2b7-0726-497d-9087-2c8274133ff3"
+  ]
+}

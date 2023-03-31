@@ -1,0 +1,22 @@
+{%- comment -%}
+  Renders an article item for a given blog with image, article title and article date.
+  Accepts:
+  - article: {Object} Article object
+  - lazy: {Boolean} Image should be lazy loaded. Default: true (optional)
+  Usage example:
+  {%- render 'component.article-item' blog: blog, article: article, lazy: lazy -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign lazy = lazy | default: true, allow_false: true
+-%}
+
+<div class='flex flex-col'>
+  <a href='{{- article.url -}}' class='relative text-xs lg:text-sm block'>
+    {%- render 'component.image', img: article.image, lazy: lazy -%}
+    <div class='inline-flex items-start justify-start w-full mt-2'>
+      <p class='text-xs lg:text-base'>{{- article.published_at | date: '%d %B, %Y' -}}</p>
+    </div>
+    <p class='w-full text-base lg:text-xl'>{{- article.title -}}</p>
+  </a>
+</div>

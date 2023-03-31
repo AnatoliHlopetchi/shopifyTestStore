@@ -1,0 +1,123 @@
+{%- liquid
+  assign s = section.settings
+-%}
+
+<section class='lg:grid lg:grid-cols-2'>
+  {%- if s.img %}
+    {%- render 'component.image',
+      img: s.img,
+      desktop_img: s.desktop_img,
+      img_class: 'object-cover'
+    -%}
+  {%- endif -%}
+  <div class='p-4 flex flex-col items-center h-full lg:items-center lg:justify-center lg:mx-36'>
+    {%- if s.title != '' -%}
+      <{{ s.title_tag }} class='text-lg mb-5'>{{- s.title -}}</{{ s.title_tag }}>
+    {%- endif -%}
+    {%- if s.text != '' -%}
+      <div class='mb-6'>{{- s.text -}}</div>
+    {%- endif -%}
+    {%- if s.button_url and s.button_text != '' %}
+      {%- render 'component.button',
+        text: s.button_text,
+        href: s.button_url,
+        class: 'inline-block',
+        style: 'primary'
+      -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Text media",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Mobile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_img",
+      "label": "Desktop image",
+      "info": "If no desktop image is specified, the mobile image will be displayed"
+    },
+    {
+      "type": "header",
+      "content": "Title and text"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title tag",
+      "default": "h4",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "P"
+        }
+      ]
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "info": "If no button text is specified no button will be displayed"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button link",
+      "info": "If no button link is specified no button or icon to redirect will be displayed"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text media"
+    }
+  ]
+}
+{% endschema %}

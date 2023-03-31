@@ -1,0 +1,10 @@
+<div class='px-6 lg:px-16 pt-12 grid grid-cols-1 lg:grid-cols-2 gap-2'>
+  {%- for c in collections -%}
+    <a href='{{- c.url -}}' class='relative rounded overflow-hidden group'>
+      {% render 'component.image', max_width: 768, placeholder: 'image', aspect_ratio: 56, img_class: 'object-cover lg:group-hover:scale-105 transition-transform duration-300' %}
+      <div class='absolute inset-0 bg-gradient-to-b from-black/20 to-black/40 flex flex-col justify-center items-center text-center'>
+        <span class='text-3xl font-bold text-white'>{{- c.title -}}</span>
+      </div>
+    </a>
+  {%- endfor -%}
+</div>

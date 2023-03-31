@@ -1,0 +1,52 @@
+{%- comment -%}
+  Only available products will be rendered in this snippet
+{%- endcomment -%}
+{%- liquid
+  assign featured_collection = collections[s.featured_collection]
+  if s.only_show_available
+    assign all_featured_products_unavailable = true
+    for featured_product in featured_collection.products
+      if featured_product.available
+        assign all_featured_products_unavailable = false
+        break
+      endif
+    endfor
+  else
+    assign all_featured_products_unavailable = false
+  endif
+-%}
+
+{%- if featured_collection.products.size > 0 -%}
+  {%- comment -%} data-always-hide is to prevent resetSearch() inside predictive-search.js from 'revealing' data-featured-collection{%- endcomment -%}
+  <div
+    data-featured-collection
+    {% if all_featured_products_unavailable %}
+      data-always-hide='true'
+    {% endif %}
+    class='{% if only_show_results == true or all_featured_products_unavailable %}hidden{% endif %}'
+  >
+    <h2 class='uppercase'>
+      {% if s.featured_collection_title != blank %}
+        {{- s.featured_collection_title -}}
+      {% else %}
+        {{- featured_collection.title -}}
+      {% endif %}
+    </h2>
+    <div class='grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6'>
+      {%- liquid
+        assign loop_limit = s.featured_collection_limit
+        assign loop_counter = 0
+
+        for product in featured_collection.products
+          if loop_counter == loop_limit
+            break
+          endif
+          unless s.only_show_available and product.available == false
+            render 'component.product-item', product: product
+            assign loop_counter = loop_counter | plus: 1
+          endunless
+        endfor
+      -%}
+    </div>
+  </div>
+{%- endif -%}

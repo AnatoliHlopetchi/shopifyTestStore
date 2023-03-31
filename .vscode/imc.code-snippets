@@ -1,0 +1,8 @@
+{
+  "Import new component": {
+    "prefix": ["imc", "importcomp"],
+    "body": ["import ${1/((^[a-z])|-([a-z]))/${2}${3:/upcase}/g} from './$1'"],
+    "scope": "javascript",
+    "description": "Import component from..."
+  }
+}

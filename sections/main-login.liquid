@@ -1,0 +1,89 @@
+<div data-component='login'>
+  <div
+    data-login-form
+    class='grid grid-rows-[1fr,1px,1fr] lg:grid-rows-none lg:grid-cols-[24rem,1px,24rem] mt-12 max-w-sm mx-4 26rem:mx-auto lg:my-16 lg:max-w-4xl gap-16 xl:max-w-5xl xl:my-32 xl:gap-32'
+  >
+    <div class=''>
+      <h1 class='text-5xl'>{{- 'customer.login.login_heading' | t -}}</h1>
+      <p class='mt-4'>{{- 'customer.login.login_subheading' | t -}}</p>
+      {%- form 'customer_login', class: 'mt-12' -%}
+        {% liquid
+          assign email_label_class = ""
+          assign email_input_class = ""
+
+          if form.errors contains 'email'
+            assign email_label_class = "text-alert"
+            assign email_input_class = "border-alert"
+          endif
+        %}
+        {%-
+          render 'component.input',
+          label: 'customer.login.email',
+          id: 'CustomerEmail',
+          name: 'customer[email]',
+          type: 'email',
+          placeholder: 'customer.login.email',
+          autocomplete: 'email',
+          required: true,
+          label_class: email_label_class,
+          input_class: email_input_class,
+          container_class: 'mt-4'
+        -%}
+
+        {%- if form.password_needed -%}
+          {% liquid
+            assign password_label_class = ""
+            assign password_input_class = ""
+
+            if form.errors contains 'password'
+              assign password_label_class = "text-alert"
+              assign password_input_class = "border-alert"
+            endif
+          %}
+          {%-
+            render 'component.input',
+            label: 'customer.login.password',
+            id: 'CustomerPassword',
+            name: 'customer[password]',
+            type: 'password',
+            placeholder: 'customer.login.password',
+            autocomplete: 'current-password',
+            required: true,
+            label_class: password_label_class,
+            input_class: password_input_class,
+            container_class: 'mt-4'
+          -%}
+        {%- endif -%}
+
+        {% render 'component.form-errors' with form_errors: form.errors %}
+
+        {%
+          render 'component.button',
+          text: 'customer.login.login_button',
+          style: 'primary',
+          class: 'mt-6 w-full',
+          type: 'submit'
+        %}
+
+        <a href='' class='block underline text-center mt-6' data-to-forgot>
+          {{- 'customer.login.forgot_button' | t -}}
+        </a>
+      {%- endform -%}
+    </div>
+    <div class='w-full lg:w-auto border-t lg:border-t-0 lg:border-l border-black'></div>
+    <div class=''>
+      <h1 class='text-5xl'>{{- 'customer.login.heading' | t -}}</h1>
+      <p class='mt-4'>{{- 'customer.login.subheading' | t -}}</p>
+      {%
+        render 'component.button',
+        text: 'customer.login.register_button',
+        style: 'primary',
+        class: 'mt-9 inline-block text-center w-full',
+        type: 'submit',
+        href: routes.account_register_url
+      %}
+    </div>
+  </div>
+
+  {% render 'account.forgot-password-form' %}
+</div>

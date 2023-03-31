@@ -1,0 +1,53 @@
+{%- liquid
+  capture class_tag
+    if section.blocks.size == 2
+      echo 'lg:grid-cols-2'
+    endif
+  endcapture
+-%}
+
+<section class='lg:grid {{ class_tag }}'>
+  {%- for blocks in section.blocks -%}
+    {%- liquid
+      assign b = blocks.settings
+    -%}
+
+    {%- render 'component.image',
+      img: b.img,
+      desktop_img: b.desktop_img,
+      img_class: 'object-cover',
+      class: 'w-full'
+    -%}
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Media",
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Media",
+      "limit": 2,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Mobile image"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_img",
+          "label": "Desktop image",
+          "info": "If no desktop image is specified, the mobile image will be displayed"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Media"
+    }
+  ]
+}
+{% endschema %}

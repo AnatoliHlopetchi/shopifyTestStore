@@ -1,0 +1,64 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders a checkbox input
+
+  About:
+    Renders a checkbox input element
+
+  Accepts:
+    - id: {String} Id of the input, also sets the "for=" of the label
+    - name: {String} Name of the input
+    - label: {String} The label string of the checkbox. It can be either the translation key or a hardcoded string
+
+
+  OPTIONAL:
+    - disabled: {Boolean} (Default: false) Whether the input should be disabled.
+    - checked: {Boolean} (Default: false) Whether the checkbox input should be checked by default.
+    - required: {Boolean} (Default: false) Whether the checkbox input is required
+    - default_value: {String} Default value of the input element
+    - container_class: {String} Additional class for enclosing container div
+    - input_class: {String} Additional class for input
+    - label_class: {String} Additional class for label
+    - attributes: {String} Additional attributes you want to add, like data-attributes
+
+  Usage:
+    {%- render 'component.checkbox',
+      label: 'customer.account.addresses.add_address.set_default',
+      id: 'address_default_address_new',
+      name: 'address[default]',
+      default_value: "1",
+      container_class: 'mt-6 mb-3'
+    -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign required = required | default: false
+
+  assign translated_label = label | t
+
+  unless translated_label contains 'translation missing:'
+    assign label = translated_label
+  endunless
+-%}
+
+<div class='flex items-center {{ container_class }}'>
+  <input
+    type='checkbox'
+    name='{{ name }}'
+    id='{{ id }}'
+    class='h-5 w-5 cursor-pointer text-xs border border-black focus:ring-0 focus:ring-transparent ring-0 ring-transparent appearance-none relative after:hidden checked:after:block after:border after:border-black after:border-t-0 after:border-l-0 after:absolute after:w-[6px] after:h-3 after:top-[1px] after:left-[6px] after:rotate-45 {{ input_class }}'
+    {% if checked %}
+      checked
+    {% endif %}
+    {% if default_value != blank %}
+      value='{{ default_value }}'
+    {% endif %}
+    {% if required %}
+      required aria-required='true'
+    {% endif %}
+    {{ attributes }}
+  >
+  <label for='{{ id }}' class='ml-2 cursor-pointer select-none text-xs {{ label_class }}'>
+    {{- label -}}
+  </label>
+</div>

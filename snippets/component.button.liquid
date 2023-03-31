@@ -1,0 +1,85 @@
+{%- comment -%}
+  Expected behaviour:
+  Renders a <button> or <a> with text inside
+
+  About:
+  Render a <button></button> or <a></a> element with default styling
+
+  Accepts:
+  - text: {String / Translation} Button text. Can be either the translation path or a normal string
+  - href: {String} Href of <a> [Only needed if <a>]
+
+  OPTIONAL
+  - class: {String} class to add to the button
+  - id: {String} Id of the button
+  - attributes: {String} Additional attributes you want to add, like data-attributes
+  - type: {String} (Default: button) Button type attribute i.e. button || submit || reset [Only applicable if <button>]
+  - name: {String} Name of button [Only applicable if <button>]
+  - style: {String} Add one of the predefined button styles primary || secondary
+  - new_tab: {Boolean} (Default: false) In case you would like to open the link connected to the button in a new tab
+
+
+  Usage:
+  Example of <button> with translation text
+  {% render 'component.button',
+  text: 'products.product.add_to_wishlist',
+  class: 'p-4 lg:p-6',
+  type: 'submit',
+  name: 'wishlist',
+  attributes: 'data-wishlist-button'
+  %}
+
+  Example of <a> with hardcoded string
+  {% render 'component.button',
+  text: 'Go to article',
+  id: 'article-link',
+  href: s.article_link
+  %}
+{%- endcomment -%}
+
+{%- liquid
+  assign translated_text = text | t
+
+  unless translated_text contains 'translation missing:'
+    assign text = translated_text
+  endunless
+
+  assign new_tab = new_tab | default: false, allow_false: true
+
+  if new_tab
+    assign target = '_blank'
+  endif
+
+  capture button_style
+    case style
+      when 'primary'
+        echo 'bg-primary text-white hover:bg-primary/90 focus:bg-primary/90 '
+      when 'secondary'
+        echo 'bg-transparent text-primary border border-primary hover:bg-primary hover:text-white '
+    endcase
+  endcapture
+
+  assign default_class = 'focus:outline-none focus:ring ring-primary/60 px-7 py-3 font-semibold disabled:bg-gray-300 disabled:text-gray-500 transition-colors duration-300 '
+  assign classes = button_style | append: default_class | append: class
+-%}
+
+{% liquid
+  if href
+    assign tag = 'a'
+    assign tag_extras = 'href="' | append: href | append: '"'
+    if new_tab
+      assign tag_extras = tag_extras | append: ' target="_blank"'
+    endif
+  else
+    assign type = type | default: 'button'
+    assign tag = 'button'
+    assign tag_extras = 'type="' | append: type | append: '"'
+    if name != blank
+      assign tag_extras = tag_extras | append: ' name="' | append: name | append: '"'
+    endif
+  endif
+%}
+
+<{{ tag }} {{ tag_extras }} id='{{- id -}}' class='{{- classes -}}' {{ attributes -}}>
+  {{- text -}}
+</{{ tag }}>

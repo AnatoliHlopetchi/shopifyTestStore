@@ -1,0 +1,207 @@
+{%- liquid
+  assign s = section.settings
+
+  assign video = s.video_mobile.sources | where: 'format', 'mp4' | map: 'url' | default: nill
+  assign video_desktop = s.video_desktop.sources | where: 'format', 'mp4' | map: 'url' | default: nill
+  assign image = s.video_mobile.preview_image | default: s.image_mobile
+  assign image_desk = s.video_desktop.preview_image | default: s.image_desktop
+
+  capture data_attr
+    if s.video_mobile or video_desktop
+      echo 'data-component="hero"'
+    endif
+  endcapture
+
+  capture video_class
+    if video
+      echo 'flex '
+    else
+      echo 'hidden '
+    endif
+    if video_desktop
+      echo 'lg:flex'
+    else
+      echo 'lg:hidden'
+    endif
+  endcapture
+-%}
+
+<section
+  class='after:opacity-[var(--overlayOpacity)] relative after:absolute after:inset-0 after:bg-black'
+  style='--overlayOpacity: {{ s.overlay_opacity | divided_by: 100.00 }};'
+  {{ data_attr }}
+>
+  <div class='relative'>
+    {%- if image or image_desk -%}
+      {%- render 'component.image', img: image, lazy: s.lazyload_image, desktop_img: image_desk -%}
+    {%- endif -%}
+    {%- if video or video_desktop -%}
+      <video
+        data-video
+        class='
+          opacity-0 absolute inset-0 h-full w-full
+          open:opacity-100 transition duration-300
+          {{ video_class }}
+        '
+        playsinline
+        autoplay
+        loop
+        data-mobile-source='{{- video -}}'
+        data-desktop-source='{{- video_desktop -}}'
+        muted
+      >
+        <source data-source type='video/mp4'>
+      </video>
+    {%- endif -%}
+  </div>
+  <div class='text-white max-w-[275px] absolute inset-0 flex flex-col items-center justify-center space-y-4 lg:max-w-5xl mx-auto z-[1]'>
+    {%- if s.title -%}
+      <{{ s.title_tag }} class='text-2xl text-center whitespace-pre-line lg:text-8xl'>
+        {{- s.title | upcase -}}
+      </{{ s.title_tag }}>
+    {%- endif -%}
+    {%- if s.subtitle -%}
+      <p class='text-base text-center whitespace-pre-line'>
+        {{- s.subtitle -}}
+      </p>
+    {%- endif -%}
+    {%- if s.button_url -%}
+      {%- render 'component.button', text: s.button_text, style: 'primary', href: s.button_url -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title",
+      "default": "The crafted collection",
+      "info": "Use shift + enter to create a new line"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Core essentials that embody timeless design, quality and sustainability.",
+      "info": "Use shift + enter to create a new line"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "shop collection"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button url"
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop image"
+    },
+    {
+      "type": "header",
+      "content": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video"
+    },
+    {
+      "type": "video",
+      "id": "video_desktop",
+      "label": "Desktop video"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "lazyload_image",
+      "label": "Lazyload image",
+      "default": false,
+      "info": "Only lazyload the image when it's not the first image on the page"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title tag",
+      "default": "h4",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "P"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "label": "Overlay opacity",
+      "info": "Add a see through black layer between your image/video and the content",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

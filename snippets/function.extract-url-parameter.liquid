@@ -1,0 +1,33 @@
+{%- comment -%}
+  Expected behaviour:
+    Returns the targeted URL parameter (value) from the current page URL
+
+  Accepts:
+    - parameter: {String} The URL parameter to get the value from
+
+  Usage:
+    Example URL: https://www.askphill.com?foo=bar
+
+    {%- render 'function.extract-url-parameter', parameter: 'foo' -%}
+
+    This will return the value 'bar'
+{%- endcomment -%}
+
+{%- liquid
+  capture content_for_header_string
+    echo content_for_header
+  endcapture
+
+  assign param_selector_qm = parameter | prepend: '?' | append: '='
+  assign param_selector_amp = parameter | prepend: '&' | append: '='
+
+  assign url = content_for_header_string | split: '"pageurl":"' | last | split: '"' | first | split: '.myshopify.com' | last | replace: '\/', '/' | replace: '%20', ' ' | replace: '\u0026', '&' | replace: '%2C', ','
+
+  if url contains param_selector_qm
+    assign param_value = url | split: param_selector_qm | last | split: '&' | first
+  elsif url contains param_selector_amp
+    assign param_value = url | split: param_selector_amp | last | split: '&' | first
+  endif
+
+  echo param_value
+-%}

@@ -1,0 +1,27 @@
+<section data-info>
+  {%-
+    render 'component.input',
+    container_class: 'mt-7 lg:mt-12',
+    id: 'InfoFirstName',
+    placeholder: customer.first_name,
+    label: 'customer.account.addresses.info.first_name',
+    attributes: 'disabled'
+  -%}
+  {%-
+    render 'component.input',
+    container_class: 'mt-4',
+    id: 'InfoLastName',
+    placeholder: customer.last_name,
+    label: 'customer.account.addresses.info.last_name',
+    attributes: 'disabled'
+  -%}
+  {%-
+    render 'component.input',
+    container_class: 'mt-4',
+    id: 'InfoEmail',
+    placeholder: customer.email,
+    label: 'customer.account.addresses.info.email',
+    attributes: 'disabled'
+  -%}
+  <p class='mt-6'>{{ 'customer.account.addresses.info.password_change_not_possible' | t }}</p>
+</section>

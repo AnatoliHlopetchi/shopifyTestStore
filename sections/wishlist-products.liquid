@@ -1,0 +1,11 @@
+{%- liquid
+  assign product_ids = search.terms | split: ','
+  paginate collections.all.products by 1000
+    for product in collections.all.products
+      assign product_id = product.id | append: ''
+      if product_ids contains product_id
+        render 'component.product-item', product: product, atc_enabled: true
+      endif
+    endfor
+  endpaginate
+-%}

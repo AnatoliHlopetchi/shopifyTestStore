@@ -1,0 +1,31 @@
+<!-- JSON-LD DATA FAQ page -->
+<script type='application/ld+json'>
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "url": "{{ page.url }}",
+    "mainEntity": [
+      {%- for category in categories -%}
+        {%- liquid
+          assign b = category.settings
+          assign category_index = b.index
+        -%}
+        {%- for question in questions -%}
+          {%- liquid
+            assign b = question.settings
+          -%}
+          {%- if b.category_index == category_index -%}
+            {
+              "@type": "Question",
+              "name": "{{- b.title -}}",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "{{- b.answer -}}"
+              }
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+    ]
+  }
+</script>

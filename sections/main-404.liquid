@@ -1,0 +1,85 @@
+{%- liquid
+  assign s = section.settings
+  assign link = s.button_url | default: routes.root_url
+-%}
+
+<section class='min-h-screen flex flex-col justify-center items-center'>
+  {%- if s.title != blank -%}
+    <{{ s.title_tag }}>
+      {{- s.title -}}
+    </{{ s.title_tag }}>
+  {%- endif -%}
+
+  {%- if s.button_text != blank -%}
+    {%- render 'component.button', text: s.button_text, href: link, style: 'primary' -%}
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "<p>Page not found: 404</p>"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title tag",
+      "default": "h1",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "P"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "button"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Home"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button url"
+    }
+  ]
+}
+{% endschema %}

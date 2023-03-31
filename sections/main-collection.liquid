@@ -1,0 +1,183 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<div data-component='collectionFilter' data-id='{{ section.id }}'>
+  <h1>{{- collection.title -}}</h1>
+  {% if s.enable_filtering %}
+    <form data-filter-controls class='flex'>
+      {%- for filter in collection.filters -%}
+        <div data-index='{{ forloop.index }}'>
+          {% case filter.type %}
+            {% when 'list' %}
+              <span>{{ filter.label | escape }}</span>
+              <div class=''>
+                <span class=''>{{ filter.active_values.size }}</span>
+                <a href='{{ filter.url_to_remove }}' class=''> reset </a>
+              </div>
+
+              <ul class='grid' role='list'>
+                {%- for value in filter.values -%}
+                  <li class=''>
+                    <label
+                      for='Filter-{{ filter.label | escape }}-{{ forloop.index }}'
+                      class='{% if value.count == 0 and value.active == false %}bg-red-700{% else %}bg-green-600{% endif %}'
+                    >
+                      <input
+                        type='checkbox'
+                        name='{{ value.param_name }}'
+                        value='{{ value.value }}'
+                        id='Filter-{{ filter.label | escape }}-{{ forloop.index }}'
+                        {% if value.active %}
+                          checked
+                        {% endif %}
+                        {% if value.count == 0 and value.active == false %}
+                          disabled
+                        {% endif %}
+                      >
+                      {{ value.label | escape }} ({{ value.count }})
+                    </label>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {% when 'price_range' %}
+              {% liquid
+                assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+                assign uses_comma_decimals = false
+                if currencies_using_comma_decimals contains cart.currency.iso_code
+                  assign uses_comma_decimals = true
+                endif
+                assign max_price_amount = filter.range_max | money | strip_html | escape
+              %}
+              <div>
+                <div>
+                  <label class='' for='Filter-{{ filter.label | escape }}-GTE'>From</label>
+                  <input
+                    class=''
+                    name='{{ filter.min_value.param_name }}'
+                    id='Filter-{{ filter.label | escape }}-GTE'
+                    {%- if filter.min_value.value -%}
+                      {%- if uses_comma_decimals -%}
+                        value='{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}'
+                      {%- else -%}
+                        value='{{ filter.min_value.value | money_without_currency | replace: ',', '' }}'
+                      {%- endif %}
+                    {%- endif -%}
+                    type='number'
+                    placeholder='0'
+                    min='0'
+                    {%- if uses_comma_decimals -%}
+                      max='{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}'
+                    {%- else -%}
+                      max='{{ filter.range_max | money_without_currency | replace: ',', '' }}'
+                    {% endif %}
+                  >
+                </div>
+                <span class=''>{{ cart.currency.symbol }}</span>
+                <div class=''>
+                  <label class='' for='Filter-{{ filter.label | escape }}-LTE'>To</label>
+                  <input
+                    class=''
+                    name='{{ filter.max_value.param_name }}'
+                    id='Filter-{{ filter.label | escape }}-LTE'
+                    {%- if filter.max_value.value -%}
+                      {%- if uses_comma_decimals -%}
+                        value='{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '.' }}'
+                      {%- else -%}
+                        value='{{ filter.max_value.value | money_without_currency | replace: ',', '' }}'
+                      {%- endif %}
+                    {%- endif -%}
+                    type='number'
+                    min='0'
+                    {%- if uses_comma_decimals -%}
+                      placeholder='{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}'
+                      max='{{ filter.range_max | money_without_currency | replace: '.', '' | replace: ',', '.' }}'
+                    {%- else -%}
+                      placeholder='{{ filter.range_max | money_without_currency | replace: ',', '' }}'
+                      max='{{ filter.range_max | money_without_currency | replace: ',', '' }}'
+                    {% endif %}
+                  >
+                </div>
+              </div>
+          {% endcase %}
+        </div>
+      {% endfor %}
+
+      <label class='' for='SortBy'>sort by</label>
+      <div class=''>
+        {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+        <select
+          name='sort_by'
+          class='facet-filters__sort select__select caption-large'
+          id='SortBy'
+          aria-describedby='a11y-refresh-page-message'
+        >
+          {%- for option in collection.sort_options -%}
+            <option
+              value='{{ option.value | escape }}'
+              {% if option.value == sort_by %}
+                selected='selected'
+              {% endif %}
+            >
+              {{ option.name | escape }}
+            </option>
+          {%- endfor -%}
+        </select>
+      </div>
+    </form>
+  {% endif %}
+
+  <div data-filter-loading style='opacity:0'>
+    <h1>LOADING</h1>
+  </div>
+
+  <div data-fiter-selected>
+    <ul>
+      {%- for filter in collection.filters -%}
+        {%- for value in filter.active_values -%}
+          <li>{{ value.label | escape }}</li>
+        {%- endfor -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+
+  <div data-product-grid>
+    {%- paginate collection.products by 24 -%}
+      {%- if collection.products.size == 0 -%}
+        <p>No Products in collection</p>
+      {%- else -%}
+        <div class='grid grid-cols-2 gap-1 lg:grid-cols-3 xl:grid-cols-4 gap-y-4 xl:px-16'>
+          {%- for product in collection.products -%}
+            {% render 'component.product-item', product: product %}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          {% render 'component.pagination', paginate: paginate, anchor: '' %}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable Filter",
+      "info": "If enabled the filter is shown"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
+}
+{% endschema %}

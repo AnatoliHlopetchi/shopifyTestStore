@@ -1,0 +1,100 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders an input element
+
+  About:
+    Renders an input element (Text based inputs. Radio or checkbox inputs have their own component)
+
+  Accepts:
+    - id: {String} Id of the input, also sets the "for=" of the label
+    - name: {String} Name of the input
+    - label: {String} The label string of the input. It can be either the translation key or a hardcoded string
+
+  OPTIONAL:
+    - type: {String} (Default: text) Type of the input (e.g. text, email, password)
+    - placeholder: {String} The placeholder string of the input. It can be either the translation key or a hardcoded string
+    - disabled: {Boolean} (Default: false) Whether the input should be disabled
+    - required: {Boolean} (Default: false) Whether the input is required
+    - autocomplete: {String} (Default: "off") Autocomplete attribute
+    - autocapitalize: {String} (Default: "off") Autocapitalize attribute
+    - autocorrect: {String} (Default: "off") Autocorrect attribute
+    - spellcheck: {String} (Default: false) Spellcheck attribute
+    - default_value: {String} Default value of the input element
+    - container_class: {String} Additional class for enclosing container div
+    - input_class: {String} Additional class for input
+    - label_class: {String} Additional class for label
+    - attributes: {String} Additional attributes you want to add, like data-attributes
+
+  Usage:
+    {% liquid
+      assign email_label_class = ""
+      assign email_input_class = ""
+
+      if form.errors contains 'email'
+        assign email_label_class = "text-alert"
+        assign email_input_class = "border-alert"
+      endif
+    %}
+    {%- render 'component.input',
+      id: 'CustomerEmail',
+      name: 'customer[email]',
+      label: 'customer.login.email',
+      placeholder: 'customer.login.email',
+      type: 'email',
+      autocomplete: 'email',
+      required: true,
+      label_class: email_label_class,
+      input_class: email_input_class,
+      container_class: 'mt-4'
+    -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign type = type | default: 'text'
+  assign autocomplete = autocomplete | default: 'off'
+  assign autocapitalize = autocapitalize | default: 'off'
+  assign autocorrect = autocorrect | default: 'off'
+  assign spellcheck = spellcheck | default: false
+  assign required = required | default: false
+
+  assign translated_label = label | t
+
+  unless translated_label contains 'translation missing:'
+    assign label = translated_label
+  endunless
+
+  if placeholder != blank
+    assign translated_placeholder = placeholder | t
+
+    unless translated_placeholder contains 'translation missing:'
+      assign placeholder = translated_placeholder
+    endunless
+  endif
+-%}
+
+<div class='flex flex-col {{ container_class }}'>
+  <label for='{{ id }}' class='text-xs {{ label_class }}'>
+    {{- label -}}
+  </label>
+  <input
+    type='{{ type }}'
+    name='{{ name }}'
+    id='{{ id }}'
+    class='mt-2 py-3 px-4 border border-black {{ input_class }}'
+    {% if placeholder %}
+      placeholder='{{- placeholder -}}'
+    {% endif %}
+    {% if default_value != blank %}
+      value='{{ default_value }}'
+    {% endif %}
+    {% if required %}
+      required aria-required='true'
+    {% endif %}
+    autocomplete='{{ autocomplete }}'
+    autocapitalize='{{ autocapitalize }}'
+    autocorrect='{{ autocorrect }}'
+    aria-label='{{- label -}}'
+    spellcheck='{{ spellcheck }}'
+    {{ attributes }}
+  >
+</div>

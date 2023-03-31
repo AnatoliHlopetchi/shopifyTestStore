@@ -1,0 +1,72 @@
+{%- liquid
+  if canonical_url contains 'addresses'
+    assign is_address_template = true
+  else
+    assign is_address_template = false
+  endif
+-%}
+
+<div
+  class='my-7 mx-4 lg:mx-16 lg:my-32 lg:flex lg:gap-16 xl:mx-auto lg:max-w-6xl'
+  data-component='account'
+>
+  <div class='flex justify-between items-end lg:flex-col lg:justify-start lg:items-start lg:gap-12 lg:min-w-[16rem]'>
+    <h2 class='text-3xl lg:text-[40px] break-words'>
+      {{ 'customer.account.greeting' | t: first_name: customer.first_name }}
+    </h2>
+    <ul class='hidden lg:flex lg:flex-col lg:gap-3'>
+      <li>
+        <a
+          class='text-2xl {% if is_address_template %}opacity-50{% endif %}'
+          href='{{ routes.account_url }}'
+        >
+          {{- 'customer.account.orders.tab_title_desktop' | t -}}
+        </a>
+      </li>
+      <li>
+        <a
+          class='text-2xl {% unless is_address_template %}opacity-50{% endunless %}'
+          href='{{ routes.account_addresses_url }}'
+        >
+          {{- 'customer.account.addresses.tab_title_desktop' | t -}}
+        </a>
+      </li>
+    </ul>
+    <a class='underline text-base lg:text-xl' href='{{ routes.account_logout_url }}'>
+      {{- 'customer.account.logout' | t -}}
+    </a>
+  </div>
+
+  {% capture account_tab_options %}
+    <option
+      {% unless is_address_template %}
+        selected
+      {% endunless %}
+      value='{{ routes.account_url }}'
+    >
+      {{ 'customer.account.orders.tab_title_desktop' | t }}
+    </option>
+    <option
+      {% if is_address_template %}
+        selected
+      {% endif %}
+      value='{{ routes.account_addresses_url }}'
+    >
+      {{ 'customer.account.addresses.tab_title_mobile' | t }}
+    </option>
+  {% endcapture %}
+
+  {%-
+    render 'component.select',
+    options: account_tab_options,
+    container_class: 'flex flex-col mt-4 lg:hidden',
+    select_class: 'mt-2 py-3 px-4 border border-black appearance-none',
+    attributes: 'data-account-page-switcher'
+  -%}
+
+  {% if is_address_template %}
+    {% render 'account.addresses' %}
+  {% else %}
+    {% render 'account.orders' %}
+  {% endif %}
+</div>

@@ -1,0 +1,84 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+      }
+    },
+    "1ac03bff-06ab-452e-a236-f4861f18ec69": {
+      "type": "page-faq",
+      "blocks": {
+        "6e2b7567-d466-4421-86ed-7f9c449506c1": {
+          "type": "category",
+          "settings": {
+            "title": "Shipping",
+            "index": 1
+          }
+        },
+        "a4cd2ed9-653b-4b11-8d74-b0ce1d7e92ee": {
+          "type": "question",
+          "settings": {
+            "category_index": 1,
+            "title": "Where and when do you deliver",
+            "answer": "<p>- Deliveries within the Netherlands and Belgium: Same day shipment on orders placed before 10pm on working days.<\/p><p>- Deliveries within the European Union: two to three working days.<\/p><p>- Deliveries in all other countries: three to six working days.<br\/><br\/>*Please note that during sale periods shipping may take longer than normal. We apologise in advance for any potential delays in delivery. <br\/><br\/><\/p><p>*Please be advised that shipping costs might apply for your order. The shipping costs are listed at the end of check out. <\/p>"
+          }
+        },
+        "3ae717ec-9191-4c8b-b4ce-33a6750aafea": {
+          "type": "category",
+          "settings": {
+            "title": "Returns",
+            "index": 2
+          }
+        },
+        "22cbd781-6057-4b91-8373-8254cfdc6f07": {
+          "type": "question",
+          "settings": {
+            "category_index": 2,
+            "title": "How do I return an order?",
+            "answer": "<p>If you are not happy with your purchase and wish to return an(y) item(s), please return your order within 30 days from receiving your order. Orders must be returned unused and in the original packaging. Our Ready to Wear collection has to be returned unused, unwashed and with all labels still attached. <\/p>"
+          }
+        },
+        "b95b5dea-292c-4d4f-80b8-abe427ed321e": {
+          "type": "category",
+          "settings": {
+            "title": "Payments",
+            "index": 3
+          }
+        },
+        "87728666-7101-4c11-aa6a-39a2d2ae84d4": {
+          "type": "question",
+          "settings": {
+            "category_index": 3,
+            "title": "What are the available payment methods?",
+            "answer": "<p>You can pay for your order with the following options:<br\/><br\/><\/p><p>iDeal (The Netherlands)<\/p><p>Giropay (Germany)<\/p><p>PayPal<\/p><p>Visa Card<\/p><p>MasterCard<\/p><p>American Express<\/p><p>Klarna Afterpay (Selected countries, only available for 1 item orders)<\/p><p>Apple Pay<\/p>"
+          }
+        },
+        "3d70df06-fd7c-4abf-9420-dc3f30b60645": {
+          "type": "question",
+          "settings": {
+            "category_index": 3,
+            "title": "Refunds",
+            "answer": "<p>If you returned your order and selected ‘money refund’ we will refund you as soon as possible within the 14 business days of receiving your return. We always refund the money to the bank account\/credit card you used for the order.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "6e2b7567-d466-4421-86ed-7f9c449506c1",
+        "a4cd2ed9-653b-4b11-8d74-b0ce1d7e92ee",
+        "3ae717ec-9191-4c8b-b4ce-33a6750aafea",
+        "22cbd781-6057-4b91-8373-8254cfdc6f07",
+        "b95b5dea-292c-4d4f-80b8-abe427ed321e",
+        "87728666-7101-4c11-aa6a-39a2d2ae84d4",
+        "3d70df06-fd7c-4abf-9420-dc3f30b60645"
+      ],
+      "settings": {
+        "category_tag": "h4"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1ac03bff-06ab-452e-a236-f4861f18ec69"
+  ]
+}

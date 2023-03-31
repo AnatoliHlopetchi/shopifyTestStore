@@ -1,0 +1,110 @@
+<div
+  tabindex='-1'
+  class='fixed z-50 inset-0 group pointer-events-none open:pointer-events-auto'
+  data-component='cartDrawer'
+  {{ section.shopify_attributes }}
+>
+  <button
+    type='button'
+    tabindex='-1'
+    data-toggle
+    class='absolute inset-0 bg-black opacity-0 group-open:opacity-20 transition-opacity duration-500 w-full h-full'
+  ></button>
+  <form
+    action='{{- routes.cart_url -}}'
+    method='post'
+    class='absolute bg-white top-0 right-0 h-full w-full lg:w-96 flex flex-col translate-x-full transition-transform duration-500 group-open:translate-x-0'
+    data-focus-el
+  >
+    <div class='flex flex-shrink-0 items-center justify-between p-4 border-b border-gray-200'>
+      <p class='text-lg font-semibold'>{{- 'cart.general.count' | t: count: cart.item_count -}}</p>
+      <button type='button' data-clear>Clear cart</button>
+      <button type='button' data-toggle>{{- 'cart.general.close' | t -}}</button>
+    </div>
+
+    <ul class='overflow-auto flex-1'>
+      {%- for item in cart.items -%}
+        <li
+          class='relative flex items-start px-4 py-4 border-b border-gray-200'
+          data-key='{{- item.key -}}'
+          data-component='cartItem'
+        >
+          <div class='w-20 overflow-hidden mr-4'>
+            {% render 'component.image',
+              img: item.image,
+              max_width: 240,
+              img_class: 'object-contain',
+              aspect_ratio: 100,
+              placeholder: 'image'
+            %}
+          </div>
+          <div class='flex flex-1 my-auto'>
+            <div>
+              <p class='text-base font-semibold'>{{- item.product.title -}}</p>
+              <p class='text-sm text-gray-400'>{{- item.variant.title -}}</p>
+              <div class='flex items-center relative z-20 mt-2'>
+                <button
+                  data-update
+                  data-value='{{- item.quantity | minus: 1 -}}'
+                  type='button'
+                  class='border border-gray-200 w-6 h-6 align-middle text-center border-r-0 hover:opacity-60'
+                >
+                  -
+                </button>
+                <button
+                  type='button'
+                  class='border border-gray-200 w-auto h-6 align-middle text-center px-2'
+                >
+                  {{- item.quantity -}}
+                </button>
+                <button
+                  data-update
+                  data-value='{{- item.quantity | plus: 1 -}}'
+                  type='button'
+                  class='border border-gray-200 w-6 h-6 align-middle text-center border-l-0 hover:opacity-60'
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <div class='ml-auto text-right flex flex-col'>
+              {%- render 'component.price',
+                price: item.final_line_price,
+                compare_at: item.original_line_price
+              -%}
+              <button
+                type='button'
+                class='text-xs mt-auto font-semibold relative z-20'
+                data-update
+                data-value='0'
+              >
+                {{- 'cart.product_item.remove' | t -}}
+              </button>
+            </div>
+          </div>
+          <a href='{{- item.url -}}' class='absolute inset-0 z-10'></a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <div class='p-6'>
+      {% comment %} theme-check-disable SpaceInsideBraces {% endcomment %}
+      {%- render 'component.button',
+        type: 'submit',
+        style: 'primary',
+        name: 'checkout',
+        text: 'cart.general.checkout',
+        class: 'lg:w-full'
+      -%}
+      {% comment %} theme-check-enable SpaceInsideBraces {% endcomment %}
+    </div>
+    {%- render : 'component.payment-icons', container_class: 'flex flex-wrap px-6 pb-6 justify-center gap-2' -%}
+  </form>
+</div>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,17 @@
+{%- for image in product.images limit: 3 -%}
+  <link
+    rel='preload'
+    as='image'
+    imagesrcset='{%- render 'function.srcset', img: image -%}'
+    imagesizes='100vw'
+  >
+{%- endfor -%}
+
+{%- for product in collection.products limit: 6 -%}
+  <link
+    rel='preload'
+    as='image'
+    imagesrcset='{%- render 'function.srcset', img: product.featured_image -%}'
+    imagesizes='100vw'
+  >
+{%- endfor -%}

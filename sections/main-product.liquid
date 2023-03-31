@@ -1,0 +1,133 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  render 'product.head', current_variant: current_variant
+-%}
+
+<div class='product px-6 xl:px-16' data-component='productSelection'>
+  <div class='grid grid-cols-4 gap-1'>
+    {%- for image in product.images -%}
+      {% render 'component.image', img: image, max_width: 1280 %}
+    {%- endfor -%}
+  </div>
+
+  {%- form 'product', product, class: 'product__form', data-component: "productForm", novalidate: true -%}
+    <input type='hidden' name='quantity' value='1'>
+
+    {% for block in section.blocks %}
+      {%- case block.type -%}
+        {%- when 'title' -%}
+          <h1 class='text-xl font-semibold'>{{- product.title -}}</h1>
+        {%- when 'prices' -%}
+          {%- render 'component.price', product: current_variant, has_data_attributes: true -%}
+        {%- when 'string' -%}
+          <p class='text-xs uppercase tracking-wider font-semibold text-gray-400'>
+            {{- block.settings.text -}}
+          </p>
+        {%- when 'cta' -%}
+          {%-
+            render 'component.button',
+            text: 'products.product.add_to_cart',
+            type: 'submit',
+            attributes: 'data-submit'
+          -%}
+        {%- when 'variants' -%}
+          {%-
+            render 'product.options',
+            option_type: block.settings.type,
+            current_variant: current_variant
+          -%}
+        {%- when 'tab' -%}
+          {%-
+            render 'component.accordion',
+            title: block.settings.title,
+            content: block.settings.content,
+            active: block.settings.open,
+            group: section.id
+          -%}
+        {%- when 'app' -%}
+          {%- render block -%}
+      {%- endcase -%}
+    {% endfor %}
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "blocks": [
+    {
+      "name": "Title",
+      "type": "title",
+      "limit": 1
+    },
+    {
+      "name": "Prices",
+      "type": "prices",
+      "limit": 1
+    },
+    {
+      "name": "Call-To-Action",
+      "type": "cta",
+      "limit": 1
+    },
+    {
+      "name": "String",
+      "type": "string",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "name": "Variants",
+      "type": "variants",
+      "settings": [
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Type",
+          "options": [
+            {
+              "value": "radio",
+              "label": "Radio"
+            },
+            {
+              "value": "select",
+              "label": "Select"
+            }
+          ],
+          "default": "select"
+        }
+      ]
+    },
+    {
+      "name": "Tab",
+      "type": "tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default?",
+          "info": "Only 1 tab can be open at a time"
+        }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ]
+}
+{% endschema %}

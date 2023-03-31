@@ -1,0 +1,170 @@
+<section data-edit-addresses class='hidden'>
+  <a class='block mt-7 mb-9 lg:my-12 text-xl opacity-50 cursor-pointer' data-reset-page-button>
+    {{- 'customer.account.addresses.back_to_info' | t -}}
+  </a>
+  <h1 class='text-2xl lg:text-3xl'>
+    {{ 'customer.account.addresses.edit_address.page_title' | t }}
+  </h1>
+  {% if customer.addresses_count != 0 %}
+    {% for address in customer.addresses %}
+      {% liquid
+        assign address_default_first_name = address.first_name
+        assign address_default_last_name = address.last_name
+        assign address_default_company = address.company
+        assign address_default_street_name = address.address1
+        assign address_default_city = address.city
+        assign address_default_zipcode = address.zip
+        assign address_default_phone = address.phone
+
+        if address.first_name == blank
+          assign address_default_first_name = blank
+        endif
+        if address.last_name == blank
+          assign address_default_last_name = blank
+        endif
+        if address.company == blank
+          assign address_default_company = blank
+        endif
+        if address.address1 == blank
+          assign address_default_street_name = blank
+        endif
+        if address.city == blank
+          assign address_default_city = blank
+        endif
+        if address.zip == blank
+          assign address_default_zipcode = blank
+        endif
+        if address.phone == blank
+          assign address_default_phone = blank
+        endif
+      %}
+      <div data-edit-address-form data-address-id='{{ address.id }}' class='mt-9 hidden'>
+        {% form 'customer_address', address %}
+          <div class=''>
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.first_name',
+              id: 'addressFirstName',
+              name: 'address[first_name]',
+              placeholder: 'customer.account.addresses.address_form.first_name',
+              default_value: address_default_first_name,
+              autocomplete: 'given-name',
+              container_class: 'mt-4',
+              required: true
+            -%}
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.last_name',
+              id: 'addressLastName',
+              name: 'address[last_name]',
+              placeholder: 'customer.account.addresses.address_form.last_name',
+              default_value: address_default_last_name,
+              autocomplete: 'family-name',
+              container_class: 'mt-4'
+            -%}
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.company',
+              id: 'addressCompany',
+              name: 'address[company]',
+              placeholder: 'customer.account.addresses.address_form.company',
+              default_value: address_default_company,
+              container_class: 'mt-4'
+            -%}
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.street_name',
+              id: 'addressStreetName',
+              name: 'address[address1]',
+              placeholder: 'customer.account.addresses.address_form.street_name',
+              default_value: address_default_street_name,
+              autocomplete: 'street-address',
+              container_class: 'mt-4',
+              required: true
+            -%}
+            {%- comment -%}Liquid way of getting the default country option without JS{%- endcomment -%}
+            {%- liquid
+              assign countries = all_country_option_tags | split: '<option'
+              capture options
+                for country in countries
+                  echo '<option'
+                  if country contains address.country
+                    echo ' selected '
+                  endif
+                  echo country
+                endfor
+              endcapture
+            -%}
+            {%-
+              render 'component.select',
+              name: 'address[country]',
+              options: options,
+              id: "AddressCountryNew",
+              label: 'customer.account.addresses.address_form.country',
+              label_class: 'text-xs',
+              container_class: 'flex flex-col mt-4',
+              select_class: 'mt-2 py-3 px-4 border border-black appearance-none after:content-[""]',
+              autocomplete: 'country',
+              required: true
+            -%}
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.city',
+              id: 'addressCity',
+              name: 'address[city]',
+              placeholder: 'customer.account.addresses.address_form.city',
+              default_value: address_default_city,
+              autocomplete: 'address-level2',
+              container_class: 'mt-4',
+              required: true
+            -%}
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.zipcode',
+              id: 'addressZip',
+              name: 'address[zip]',
+              placeholder: 'customer.account.addresses.address_form.zipcode',
+              default_value: address_default_zipcode,
+              autocomplete: 'postal-code',
+              container_class: 'mt-4'
+            -%}
+            {%-
+              render 'component.input',
+              label: 'customer.account.addresses.address_form.phone',
+              id: 'addressTelephone',
+              name: 'address[phone]',
+              placeholder: 'customer.account.addresses.address_form.phone',
+              default_value: address_default_phone,
+              autocomplete: 'tel',
+              container_class: 'mt-4'
+            -%}
+            {% unless address == customer.default_address %}
+              {% liquid
+                assign edit_address_checkbox_id = "address_default_address_edit_" | append: address.id
+              %}
+              {%-
+                render 'component.checkbox',
+                label: 'customer.account.addresses.edit_address.set_default',
+                id: edit_address_checkbox_id,
+                name: 'address[default]',
+                default_value: "1",
+                container_class: 'mt-6 mb-3'
+              -%}
+            {% endunless %}
+            <input
+              type='submit'
+              value='{{ 'customer.account.addresses.edit_address.submit_button' | t }}'
+              class='w-full py-3 mt-6 cursor-pointer font-normal bg-primary text-white hover:bg-primary/90 focus:bg-primary/90'
+            >
+            <a
+              data-reset-page-button
+              class='block text-center underline cursor-pointer mx-auto my-4'
+            >
+              {{- 'customer.account.addresses.edit_address.cancel_button' | t -}}
+            </a>
+          </div>
+        {%- endform -%}
+      </div>
+    {% endfor %}
+  {% endif %}
+</section>

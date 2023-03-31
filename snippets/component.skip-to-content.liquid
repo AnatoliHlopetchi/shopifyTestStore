@@ -1,0 +1,20 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders a skip to content <a></a> tag
+
+  About:
+    Renders a skip to content <a></a> tag
+
+  Accepts:
+
+  Usage:
+    {%- render 'component.skip-to-content' -%}
+{%- endcomment -%}
+
+<a
+  tabindex='1'
+  class='fixed m-8 p-4 bg-white shadow-xl opacity-0 translate-y-4 focus:translate-y-0 duration-300 focus:opacity-100 transition-all z-50 pointer-events-none focus:pointer-events-auto'
+  href='#MainContent'
+>
+  {{- "accessibility.skip_to_text" | t -}}
+</a>

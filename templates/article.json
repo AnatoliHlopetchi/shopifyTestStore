@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "settings": {
+      }
+    },
+    "5a3d0e16-2aef-451e-a475-eca4757efef7": {
+      "type": "blog-posts",
+      "settings": {
+        "title": "<p><strong>MORE ARTICLES<\/strong><\/p>",
+        "button_text": "View Blog",
+        "button_url": "shopify:\/\/blogs\/news",
+        "blog": "",
+        "title_tag": "h4"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "5a3d0e16-2aef-451e-a475-eca4757efef7"
+  ]
+}

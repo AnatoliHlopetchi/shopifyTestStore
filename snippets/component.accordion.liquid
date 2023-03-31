@@ -1,0 +1,55 @@
+{% comment %}
+  Renders an accordion
+
+  Accepts:
+  - title: {String} Accordion title, can be string or translation key
+  - content: {String} Accordion content
+  - group: {String} A unique key to ensure a group of accordions don't interfere with a different group on the same page
+    OPTIONAL
+    - active: {Boolean} (Default: false) Set accordion to active status by default
+    - container_class: {String} Class to give to the container
+    - button_class: {String} Class to give to the button
+    - title_class: {String} Class to give to the title
+    - content_class: {String} Class to give to the content
+
+  Usage:
+  {%- render 'component.accordion',
+    title: block.settings.question,
+    content: block.settings.answer,
+    group: section.id
+  -%}
+{% endcomment %}
+
+{%- liquid
+  assign translated_title = title | t
+  unless translated_title contains 'translation missing:'
+    assign title = translated_title
+  endunless
+-%}
+
+<div
+  class='group {{ container_class }} {% if active %}open{% endif %}'
+  data-component='accordion'
+  data-group='{{ group }}'
+>
+  <button
+    type='button'
+    class='w-full py-5 flex items-center justify-between {{ button_class -}}'
+    data-toggle
+  >
+    <span class='{{- title_class }} text-left'>{{- title -}}</span>
+    <span class='block ml-4 transition-transform duration-300'>
+      {%- render 'component.icon',
+        type: 'plus',
+        class: ' w-2.5 h-2.5',
+        toggle_class: 'group-open:opacity-0 transition-all duration-300'
+      -%}
+    </span>
+  </button>
+  <div
+    class='group-open:h-[var(--innerHeight)] h-0 overflow-hidden transition-all duration-500 {{ content_class -}}'
+    data-inner
+  >
+    {{- content -}}
+  </div>
+</div>

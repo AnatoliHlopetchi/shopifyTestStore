@@ -1,0 +1,350 @@
+<meta name='robots' content='noindex'>
+<meta name='googlebot' content='noindex'>
+<meta name='googlebot-news' content='nosnippet'>
+
+<div class='pt-10 w-full mx-auto border-b border-black pb-2 mb-6'>
+  <div class='max-w-6xl px-4 lg:px-10 mx-auto'>
+    <h1 class='text-3xl'>Components</h1>
+  </div>
+</div>
+<div class='max-w-6xl px-4 lg:px-10 mx-auto'>
+  <div class='pb-4 border-b border-black mb-4'>
+    <p class='text-lg'>Introduction</p>
+  </div>
+  <div class='text-base max-w-lg'>
+    Kindly ensure that all default styles and reusable components and their corresponding states are
+    included on this page. If a component is not required, kindly remove it from this page and
+    delete the corresponding component file.
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8'>
+    <div class='pb-4 border-b border-black'>
+      <p class='text-lg'>Typography</p>
+    </div>
+    <div class='space-y-6'>
+      <h1 class='text-9xl'>Headline 9xl</h1>
+      <h2 class='text-8xl'>Headline 8xl</h2>
+      <h3 class='text-7xl'>Headline 7xl</h3>
+      <h4 class='text-6xl'>Headline 6xl</h4>
+      <h5 class='text-5xl'>Headline 5xl</h5>
+      <h6 class='text-4xl'>Headline 4xl</h6>
+      <h6 class='text-3xl'>Headline 3xl</h6>
+      <h6 class='text-2xl'>Headline 2xl</h6>
+      <h6 class='text-xl'>Headline xl</h6>
+      <h6 class='text-lg'>Headline lg</h6>
+      <p class='text-base'>Text body</p>
+      <p class='text-sm'>Text sm</p>
+      <p class='text-xs'>Text xs</p>
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8'>
+    <div class='pb-4 border-b border-black'>
+      <p class='text-lg'>Colors</p>
+    </div>
+    <div class='flex flex-wrap gap-y-4'>
+      <div class='space-y-2 flex justify-center flex-col items-center pr-6'>
+        <div class='w-20 h-20 bg-primary border rounded-full'></div>
+        <p class='text-center text-base'>Primary</p>
+      </div>
+      <div class='space-y-2 flex justify-center flex-col items-center pr-6'>
+        <div class='w-20 h-20 bg-second border rounded-full '></div>
+        <p class='text-center text-base'>Secondary</p>
+      </div>
+      <div class='space-y-2 flex justify-center flex-col items-center pr-6'>
+        <div class='w-20 h-20 bg-alert border rounded-full '></div>
+        <p class='text-center text-base'>Alert</p>
+      </div>
+      <div class='space-y-2 flex justify-center flex-col items-center pr-6'>
+        <div class='w-20 h-20 bg-lightGrey border rounded-full '></div>
+        <p class='text-center text-base'>Light grey</p>
+      </div>
+      <div class='space-y-2 flex justify-center flex-col items-center pr-6'>
+        <div class='w-20 h-20 bg-grey border rounded-full '></div>
+        <p class='text-center text-base'>Grey</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class=' py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8'>
+    <div class='pb-4 border-b border-black'>
+      <p class='text-lg'>Buttons</p>
+    </div>
+    <div class='flex flex-col items-start space-y-10'>
+      <div class='pb-2 border-b border-gray-300 w-2/3 lg:w-1/2'>
+        <p class='text-base'>Primary buttons</p>
+      </div>
+      <div class='flex items-center'>
+        <div class='flex space-x-4'>
+          {%- render 'component.button', text: 'Button', style: 'primary' -%}
+          {%- render 'component.button', text: 'Button', style: 'primary', attributes: 'disabled', -%}
+        </div>
+      </div>
+    </div>
+    <div class='flex flex-col items-start space-y-10'>
+      <div class='pb-2 border-b border-gray-300 w-2/3 lg:w-1/2'>
+        <p class='text-base'>Secondary buttons</p>
+      </div>
+      <div class='flex items-center'>
+        <div class='flex space-x-4'>
+          {%- render 'component.button', text: 'Button', style: 'secondary' -%}
+          {%- render 'component.button',
+            text: 'Button',
+            style: 'secondary',
+            attributes: 'disabled'
+          -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 w-full'>
+    <div class='pb-4 border-b border-black'>
+      <p class='text-lg'>Accordion</p>
+    </div>
+    <div class='flex flex-col space-y-10 items-start'>
+      <div class='max-w-md grid grid-cols-6'>
+        <p class='w-20 block uppercase text-capitalised-small pt-7 mb-auto col-span-2'>Open</p>
+        <div class='col-span-4'>
+          {%- capture content -%}
+          <div class="pb-6">
+            If you have selected home delivery, you can query the status of your order at any time in the My purchases section.
+          </div>
+        {%- endcapture -%}
+          {%- render 'component.accordion',
+            text: 'See more',
+            active: true,
+            group: 'faq',
+            title: 'Where is my order?',
+            content: content
+          -%}
+        </div>
+      </div>
+      <div class='max-w-md grid grid-cols-6'>
+        <p class='w-20 block uppercase text-capitalised-small pt-7 mb-auto col-span-2'>Closed</p>
+        {%- capture content -%}
+          <div class="pb-6">
+            EU Countries: 15 EUR<br>
+            Europe (non-EU): 20 EUR<br>
+            All other countries: 65 EUR
+          </div>
+        {%- endcapture -%}
+        <div class='col-span-4'>
+          {%- render 'component.accordion',
+            text: 'See more',
+            group: 'faq',
+            title: 'Where do you ship to and at what price?',
+            content: content
+          -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Text input</p>
+      </div>
+      {%-
+        render 'component.input',
+        id: 'CustomerEmail',
+        name: 'customer[email]',
+        label: 'Normal',
+        placeholder: 'customer.login.email',
+        type: 'email',
+        autocomplete: 'email',
+      -%}
+      {%- render 'component.input',
+        id: 'CustomerEmail',
+        name: 'customer[email]',
+        label: 'Required',
+        placeholder: 'customer.login.email',
+        type: 'email',
+        autocomplete: 'email',
+        required: true
+      -%}
+      {%- render 'component.input',
+        id: 'CustomerEmail',
+        name: 'customer[email]',
+        label: 'Negative',
+        placeholder: 'customer.login.email',
+        type: 'email',
+        error: true,
+        message: 'Hint',
+        autocomplete: 'email',
+        required: true
+      -%}
+      {%- render 'component.input',
+        id: 'CustomerEmail',
+        name: 'customer[email]',
+        label: 'Disabled',
+        placeholder: 'customer.login.email',
+        type: 'email',
+        message: 'Hint',
+        autocomplete: 'email',
+        attributes: 'disabled'
+      -%}
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Select box</p>
+      </div>
+      {%- assign opt = '1,2,3,4,5,6' | split: ',' -%}
+      {%- capture options -%}
+        {%- for o in opt -%}
+          <option 
+            {% if forloop.first %} selected {% endif %}>
+            {{- o -}}
+          </option>
+        {%- endfor -%}
+      {%- endcapture -%}
+      {%- render 'component.select',
+        name: 'id',
+        options: options,
+        placeholder: 'Select Option',
+        select_class: 'mt-2 py-3 px-4 border w-full border-black appearance-none'
+      -%}
+    </div>
+  </div>
+</div>
+
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Radio buttons</p>
+      </div>
+      <div class='flex space-x-10'>
+        {%- render 'component.radio',
+          label: 'Example one',
+          name: 'example',
+          checked: true,
+          container_class: 'flex gap-2'
+        -%}
+        {%- render 'component.radio',
+          label: 'Example two',
+          name: 'example',
+          container_class: 'flex gap-2'
+        -%}
+      </div>
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Checkboxes</p>
+      </div>
+      <div class='flex space-x-10'>
+        {%- render 'component.checkbox',
+          label: 'Example one',
+          name: 'example',
+          checked: true,
+          id: 'test-1',
+          container_class: 'flex gap-2'
+        -%}
+        {%- render 'component.checkbox',
+          label: 'Example two',
+          name: 'example',
+          checked: true,
+          id: 'test-2',
+          container_class: 'flex gap-2'
+        -%}
+      </div>
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Product item</p>
+      </div>
+      {%- assign product = all_products['best-shirt-ever'] -%}
+      <div class='grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4'>
+        {%- for i in (i..3) -%}
+          {%- render 'component.product-item', product: product -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Article item</p>
+      </div>
+      {%- assign blog = blogs.sections -%}
+      <div class='grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4'>
+        {%- for article in blog.articles limit: 4 -%}
+          {%- render 'component.article-item', article: article -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Pagination</p>
+      </div>
+      {%- liquid
+        paginate collections.all.products by 10
+          render 'component.pagination', paginate: paginate
+        endpaginate
+      -%}
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Payment icons</p>
+      </div>
+      {%- render 'component.payment-icons', container_class: 'flex space-x-4' -%}
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Social icons</p>
+      </div>
+      {%- render 'component.social-icons', container_class: 'flex space-x-4' -%}
+    </div>
+  </div>
+</div>
+<div class='py-8 max-w-6xl lg:px-10 px-4 mx-auto'>
+  <div class='space-y-8 flex flex-col items-start'>
+    <div class='space-y-8 py-8 w-full'>
+      <div class='pb-4 border-b border-black'>
+        <p class='text-lg'>Other icons</p>
+      </div>
+      {% assign icons = 'cross,plus,search,spinner,cart,wishlist,burger_menu,share,arrow_right,chevron_arrow_right'
+        | split: ','
+      %}
+      <div class='flex space-x-4'>
+        {%- for icon in icons -%}
+          {%- render 'component.icon', type: icon, class: 'w-4' %}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,264 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<div
+  data-component='wishlistDrawer'
+  class='group'
+>
+  <div class='fixed bg-white inset-0 left-5 lg:left-[calc(100vw-600px)] z-40 p-5 pt-0 translate-x-full transition-transform duration-500 group-open:translate-x-0 overflow-y-scroll'>
+    <div class='sticky top-0 pt-5 pb-4 bg-white z-30'>
+      <button
+        type='button'
+        class='block uppercase leading-none py-3 -my-3 ml-auto z-20 right-5 top-5 text-xs lg:text-sm'
+        data-toggle-button
+      >
+        {{- 'wishlist.close_button' | t -}}
+      </button>
+      <h1 class='text-3xl lg:text-4xl'>{{- 'wishlist.heading' | t -}}</h1>
+    </div>
+    {% render 'component.loader',
+      class: 'w-16 absolute top-1/2 left-1/2 -translate-x-1/2',
+      attributes: 'data-loader'
+    %}
+    <div data-wishlist-content class='pt-4 wishlist-content-group hidden'>
+      <h3 class='block wishlist-content-group-has-items:hidden'>
+        {{- 'wishlist.empty_wishlist_text' | t -}}
+      </h3>
+      <div class='justify-between hidden wishlist-content-group-has-items:flex'>
+        <p data-item-count class='text-xs lg:text-sm text-grey'>
+          {% comment %}Content will be added by wishlist-drawer.js updateItemCount(){% endcomment %}
+        </p>
+        {%- liquid
+          if routes.root_url.size > 1
+            comment
+              this means the url has a lang/country --> e.g. example.com/en-de/
+            endcomment
+            assign shared_wishlist_link = routes.root_url | append: '/pages/' | append: s.share_wishlist_url
+          else
+            assign shared_wishlist_link = '/pages/' | append: s.share_wishlist_url
+          endif
+        -%}
+        {%- if pages[s.share_wishlist_url] -%}
+          <button
+            data-share-wishlist
+            data-shared-wishlist-link='{{- shared_wishlist_link -}}'
+            type='button'
+            class='flex items-center space-x-2 uppercase text-xs'
+          >
+            {% render 'component.icon', type: 'share', class: 'text-black w-4' %}
+            <span data-share-wishlist-span class=''>
+              {{- 'wishlist.share_button' | t -}}
+            </span>
+            <span data-share-wishlist-span-success class='hidden font-bold'>
+              {{- 'wishlist.share_button_success' | t -}}
+            </span>
+          </button>
+        {%- endif -%}
+      </div>
+      <div
+        data-products-grid
+        class='hidden wishlist-content-group-has-items:grid grid-cols-2 lg:grid-cols-3 gap-4 mt-6'
+      >
+        {% comment %}Content will be added by wishlist-drawer.js renderWishlistGrid(){% endcomment %}
+      </div>
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign b = block.settings
+        -%}
+        {%- unless forloop.first -%}
+          <div class='my-8 w-full h-px bg-lightGrey wishlist-content-group-has-items:hidden'></div>
+        {%- endunless -%}
+        {%- case block.type -%}
+          {%- when 'button' -%}
+            {%- if b.link and b.title -%}
+              {% render 'component.button',
+                text: b.title,
+                class: 'w-full block text-center py-2.5 text-xs uppercase mt-8 wishlist-content-group-has-items:hidden',
+                style: 'secondary',
+                href: b.link
+              %}
+            {%- endif -%}
+          {%- when 'two_cards' -%}
+            {%- if b.title_1 and b.title_2 and b.link_1 and b.link_2 and b.image_1 and b.image_2 -%}
+              <div class='mt-8 flex justify-between space-x-4 wishlist-content-group-has-items:hidden'>
+                <a href='{{- b.link_1 -}}' class='basis-1/2'>
+                  {%- render 'component.image',
+                    img: b.image_1,
+                    max_width: 500,
+                    alt: b.title_1,
+                    placeholder: true
+                  -%}
+                  <h4 class='uppercase font-bold text-xs mt-1 pb-0.5 border-b border-black w-fit'>
+                    {{- b.title_1 -}}
+                  </h4>
+                </a>
+                <a href='{{- b.link_2 -}}' class='basis-1/2'>
+                  {%- render 'component.image',
+                    img: b.image_2,
+                    max_width: 500,
+                    alt: b.title_2,
+                    placeholder: true
+                  -%}
+                  <h4 class='uppercase font-bold text-xs mt-1 pb-0.5 border-b border-black w-fit'>
+                    {{- b.title_2 -}}
+                  </h4>
+                </a>
+              </div>
+            {%- endif -%}
+          {%- when 'one_large_card' -%}
+            <a href='{{- b.link -}}' class='block mt-8 wishlist-content-group-has-items:hidden'>
+              {%- render 'component.image',
+                img: b.image,
+                max_width: 500,
+                alt: b.title,
+                placeholder: true
+              -%}
+              <div class='flex justify-between mt-3'>
+                <h4 class='text-xs mt-1'>
+                  {{- b.title -}}
+                </h4>
+                <h4 class='flex items-center space-x-1'>
+                  <span class='font-bold text-xs uppercase'>{{- b.cta -}}</span>
+                  {%- render 'component.icon', type: 'arrow_right', class: 'text-black w-2.5' -%}
+                </h4>
+              </div>
+            </a>
+        {%- endcase -%}
+      {%- endfor -%}
+      {%- unless customer -%}
+        <div class='border border-lightGrey p-5 space-y-4 mt-8'>
+          <h4 class='text-xs text-grey'>
+            {{- 'wishlist.login_text' | t -}}
+          </h4>
+          <div class='flex justify-between space-x-3'>
+            {% render 'component.button',
+              text: 'wishlist.register_button',
+              class: 'text-xs text-center font-bold uppercase basis-1/2',
+              style: 'secondary',
+              href: s.discover_link
+            %}
+            {% render 'component.button',
+              text: 'wishlist.login_button',
+              class: 'text-xs text-center font-bold uppercase basis-1/2',
+              style: 'primary',
+              href: routes.account_login_url
+            %}
+          </div>
+        </div>
+      {%- endunless -%}
+    </div>
+  </div>
+  <button
+    data-toggle-button
+    type='button'
+    class='fixed bg-black inset-0 opacity-0 z-30 pointer-events-none group-open:pointer-events-auto group-open:opacity-50 transition-opacity duration-500'
+  ></button>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist Drawer",
+  "settings": [
+    {
+      "type": "page",
+      "id": "share_wishlist_url",
+      "label": "'Shared Wishlist' Page",
+      "info": "Required for the share button functionality. Assign a page with the shared-wishlist template containing the shared-wishlist section."
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Button",
+      "type": "button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link",
+          "info": "Required"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Discover",
+          "info": "Required"
+        }
+      ]
+    },
+    {
+      "name": "Two Cards",
+      "type": "two_cards",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Card 1 - Image",
+          "info": "Required"
+        },
+        {
+          "type": "url",
+          "id": "link_1",
+          "label": "Card 1 - Link",
+          "info": "Required"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Card 1 - Title",
+          "info": "Required"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Card 2 - Image",
+          "info": "Required"
+        },
+        {
+          "type": "url",
+          "id": "link_2",
+          "label": "Card 2 - Link",
+          "info": "Required"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Card 2 - Title",
+          "info": "Required"
+        }
+      ]
+    },
+    {
+      "name": "One Large Card",
+      "type": "one_large_card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Card - Image",
+          "info": "Required"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card - Link",
+          "info": "Required"
+        },
+        {
+          "type": "text",
+          "id": "cta",
+          "label": "Card - CTA",
+          "info": "Required"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card - Title",
+          "info": "Required"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

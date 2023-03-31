@@ -1,0 +1,147 @@
+{%- liquid
+  assign s = section.settings
+  assign results_size = predictive_search.resources.products.size
+  assign only_show_results = false
+  if predictive_search.performed and results_size > 0
+    assign only_show_results = true
+  endif
+-%}
+<div
+  data-component='predictiveSearch'
+  class='group'
+  data-debounce-delay='{{- s.debounce_delay -}}'
+>
+  <button
+    data-toggle-button
+    type='button'
+    class='fixed z-30 inset-0 bg-black pointer-events-none group-open:pointer-events-auto group-open:opacity-50 opacity-0 duration-500 transition-opacity cursor-pointer'
+  ></button>
+  <div class='fixed z-30 top-0 left-0 right-5 lg:right-0 bottom-0 lg:bottom-16 -translate-x-full lg:translate-x-0 group-open:translate-x-0 lg:-translate-y-full lg:group-open:translate-y-0 bg-white transition-transform duration-500 p-5 pt-0 overflow-scroll'>
+    {% render 'component.loader',
+      class: 'w-16 hidden z-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2',
+      attributes: 'data-loader'
+    %}
+    <div class='sticky top-0 pt-4 lg:pt-5 z-30 bg-white'>
+      <button
+        type='button'
+        class='block uppercase leading-none py-3 -my-3 ml-auto z-20 right-5 top-5 text-xs lg:text-sm'
+        data-toggle-button
+      >
+        {{- 'search.close_button' | t -}}
+      </button>
+      <div class='relative max-w-screen-xl mx-auto'>
+        <input
+          data-search-input
+          type='text'
+          placeholder='Search for anything'
+          class='w-full border-b border-lightGrey p-4 pl-6'
+        >
+        {%- render 'component.icon',
+          type: 'search',
+          class: 'w-4 absolute left-0 top-1/2 -translate-y-1/2 pointer-events-none'
+        -%}
+      </div>
+    </div>
+    <div data-dynamic-content class='max-w-screen-xl mx-auto mt-9 lg:mt-11 space-y-5'>
+      <div
+        data-search-results
+        class='{% unless predictive_search.performed %}hidden{% endunless %}'
+      >
+        <h3 class='uppercase'>
+          {{- 'search.results_count' | t: count: results_size -}}
+        </h3>
+        <h2 class='{% if results_size > 0 %}hidden{% endif %} mt-3'>
+          {{- 'search.no_results' | t: search_term: predictive_search.terms -}}
+        </h2>
+        <div class='grid grid-cols-2 lg:grid-cols-4 gap-4 mt-6'>
+          {%- for product in predictive_search.resources.products -%}
+            {% render 'component.product-item', product: product %}
+          {%- endfor -%}
+        </div>
+      </div>
+      {%- render 'predictive-search.suggested-terms',
+        s: section.settings,
+        only_show_results: only_show_results
+      -%}
+      {%- render 'predictive-search.featured-collection',
+        s: section.settings,
+        only_show_results: only_show_results
+      -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Predictive Search",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Suggested Search Terms"
+    },
+    {
+      "type": "text",
+      "id": "suggested_search_terms_title",
+      "label": "Suggested search terms title",
+      "default": "Trending"
+    },
+    {
+      "type": "paragraph",
+      "content": "Configure suggested search terms with blocks"
+    },
+    {
+      "type": "header",
+      "content": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured collection",
+      "info": "The featured collection of products. Will not render if blank."
+    },
+    {
+      "type": "text",
+      "id": "featured_collection_title",
+      "label": "Featured collection title",
+      "info": "This will override the collection's own title"
+    },
+    {
+      "type": "number",
+      "id": "featured_collection_limit",
+      "label": "Featured collection product limit",
+      "info": "Amount of products to render from featured collection",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "only_show_available",
+      "label": "Only show available products",
+      "info": "If checked, only render available products from featured collection",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "debounce_delay",
+      "min": 0,
+      "max": 1000,
+      "step": 100,
+      "label": "Debounce delay (in ms)",
+      "info": "The delay to wait after the last keystroke was inputted, before actually searching",
+      "default": 500
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Suggested search term",
+      "type": "suggestion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Suggested search term"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

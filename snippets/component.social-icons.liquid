@@ -1,0 +1,48 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders all the social icons which have a link in the theme settings
+
+  About:
+    Renders all the social icons which have a link in the theme settings
+
+  Accepts:
+    OPTIONAL
+    - container_class: {String} The classes applied to the container
+    - icon_width: {String} The width tailwind class applied to the icons
+
+  Usage:
+    {%-
+      render: 'component.social-icons',
+      container_class: 'flex'
+      icon_width: 'w-8'
+    -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign s = section.settings
+
+  capture socials_string
+    for s in settings
+      if s contains 'social_'
+        echo s | append: ','
+      endif
+    endfor
+  endcapture
+  assign socials = socials_string | split: ','
+
+  assign width = icon_width | default: 'w-2'
+-%}
+
+<div class='{{- container_class -}}'>
+  {%- for social in socials -%}
+    {%- liquid
+      assign split_string = social | split: '_'
+      assign link = settings[social] | default: null
+    -%}
+    {%- if link != null -%}
+      <a target='_blank' href='{{- link -}}'>
+        {%- render 'component.icon', type: split_string[1], class: width -%}
+      </a>
+    {%- endif -%}
+  {%- endfor -%}
+</div>

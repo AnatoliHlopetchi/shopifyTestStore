@@ -1,0 +1,122 @@
+<ul class='hidden lg:flex h-full'>
+  {% for block in section.blocks %}
+    {%- liquid
+      assign b = block.settings
+    -%}
+    {%- case block.type -%}
+      {%- when 'simple_url' -%}
+        {% if b.title != blank %}
+          <li class='first-of-type:-ml-4'>
+            <a
+              class='h-full px-4 text-xs flex items-center uppercase leading-none'
+              href='{{- b.url -}}'
+            >
+              {{- b.title -}}
+            </a>
+          </li>
+        {% endif %}
+      {%- else -%}
+        {% if b.title != blank %}
+          <li data-nav-toggle class='cursor-pointer group flex items-center first-of-type:-ml-4'>
+            {%- liquid
+              if b.url == blank
+                assign tag = 'span'
+              else
+                assign tag = 'a'
+                assign attributes = 'href="' | append: b.url | append: '"'
+              endif
+            -%}
+            <{{ tag }}
+              {{ attributes }}
+              class='text-xs leading-none uppercase px-4'
+            >
+              {{- b.title -}}
+            </{{ tag }}>
+            <div
+              data-nav-menu-wrapper
+              class='cursor-auto absolute left-0 right-0 top-desktopHeader z-50 bg-white opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-height ease-in-out duration-200'
+            >
+              <div data-nav-menu class=' p-10 flex justify-between'>
+                {%- comment -%}Menu links{%- endcomment -%}
+                <div class='flex space-x-20'>
+                  {% for link in linklists[b.link_list].links %}
+                    <div>
+                      {%- liquid
+                        if link.url == '#'
+                          assign tag = 'span'
+                          assign cursor = 'cursor-default'
+                        else
+                          assign tag = 'a'
+                          assign cursor = ''
+                          assign attributes = 'href="' | append: link.url | append: '"'
+                        endif
+                      -%}
+                      <{{ tag }} class='text-black {{ cursor -}}' {{ attributes }}>
+                        {{- link.title -}}
+                      </{{ tag }}>
+                      {% if link.links != blank %}
+                        <ul class='flex flex-col gap-2 mt-6'>
+                          {% for child_link in link.links %}
+                            <li>
+                              <a
+                                href='{{- child_link.url -}}'
+                                class='text-sm text-black opacity-70'
+                              >
+                                {{- child_link.title -}}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+
+                {%- comment -%}Menu Card{%- endcomment -%}
+                {% if b.card_image != blank %}
+                  {%- liquid
+                    if b.card_url == blank
+                      assign tag = 'div'
+                    else
+                      assign tag = 'a'
+                      assign attributes = 'href="' | append: b.card_url | append: '"'
+                    endif
+                  -%}
+                  <{{ tag }}
+                    class='block'
+                    {{ attributes }}
+                  >
+                    {%
+                      render 'component.image',
+                      img: b.card_image,
+                      img_class: 'object-cover',
+                      disable_aspect_ratio: true,
+                      class: 'h-[21.09vw] xl:h-[270px] w-[37.5vw] xl:w-[480px]',
+                    %}
+                    {%- if b.card_text != blank or b.card_cta != blank -%}
+                      <div class='flex justify-between mt-3'>
+                        {% if b.card_text != blank %}
+                          <h3 class='text-xs'>
+                            {{- b.card_text -}}
+                          </h3>
+                        {% endif %}
+                        {%- if b.card_cta != blank -%}
+                          <p class='flex space-x-1 items-center font-bold text-xs uppercase'>
+                            <span>{{- b.card_cta -}}</span>
+                            {%- render 'component.icon',
+                              type: 'arrow_right',
+                              class: 'text-black w-2.5'
+                            -%}
+                          </p>
+                        {%- endif -%}
+                      </div>
+                    {%- endif -%}
+                  </{{ tag }}>
+                {% endif %}
+              </div>
+            </div>
+          </li>
+        {% endif %}
+    {%- endcase -%}
+  {% endfor %}
+</ul>

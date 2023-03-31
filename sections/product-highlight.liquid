@@ -1,0 +1,106 @@
+{%- liquid
+  assign s = section.settings
+  assign product = all_products[s.product]
+-%}
+
+<section class='flex-col mx-auto my-10 lg:grid lg:grid-cols-2'>
+  <div class='lg:order-2 mb-4 lg:mb-0'>
+    {%- render 'component.image',
+      img: s.image_mobile,
+      desktop_img: s.image_desktop,
+      class: 'h-full w-full',
+      img_class: 'object-cover'
+    -%}
+  </div>
+  <div class='lg:order-1 px-12'>
+    {%- if s.title != '' -%}
+      <{{ s.title_tag }} class='flex justify-center items-center text-center mb-6 text-2xl lg:mb-16 lg:text-4xl'>
+        {{- s.title -}}
+      </{{ s.title_tag }}>
+    {%- endif -%}
+    {%- if product -%}
+      {%- render 'component.product-item', product: product, atc_enabled: true -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product Highlight",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "header",
+      "content": "Product Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_desktop",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "header",
+      "content": "Settings"
+    },
+    {
+      "type": "select",
+      "id": "title_tag",
+      "label": "Title tag",
+      "default": "h4",
+      "options": [
+        {
+          "value": "h1",
+          "label": "H1"
+        },
+        {
+          "value": "h2",
+          "label": "H2"
+        },
+        {
+          "value": "h3",
+          "label": "H3"
+        },
+        {
+          "value": "h4",
+          "label": "H4"
+        },
+        {
+          "value": "h5",
+          "label": "H5"
+        },
+        {
+          "value": "h6",
+          "label": "H6"
+        },
+        {
+          "value": "p",
+          "label": "P"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Highlight"
+    }
+  ]
+}
+{% endschema %}

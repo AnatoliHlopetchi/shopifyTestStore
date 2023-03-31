@@ -1,0 +1,52 @@
+<script>
+  window.Phill = {
+    theme: {
+      strings: {
+        product: {
+          add_to_cart: "{{ 'products.product.add_to_cart' | t }}",
+          adding_to_cart: "{{ 'products.product.adding_to_cart' | t }}",
+          added_to_cart: "{{ 'products.product.added_to_cart' | t }}",
+          sold_out: "{{ 'products.product.sold_out' | t }}",
+          unavailable: "{{ 'products.product.unavailable' | t }}",
+        },
+        cart: {
+          size: "{{ 'cart.product_item.size' | t }}",
+          remove: "{{ 'cart.product_item.remove' | t }}",
+          quantity: "{{ 'cart.product_item.quantity' | t }}",
+          empty: "{{ 'cart.general.empty' | t }}"
+        },
+        wishlist: {
+          item_count: {
+            one: "{{ 'wishlist.item_count.one' | t }}",
+            other: "{{ 'wishlist.item_count.other' | t }}"
+          }
+        },
+        newsletter: {
+          error: "{{ 'general.footer.newsletter.error' | t }}"
+        }
+      },
+      links: {
+        asset: "{{ 'XXX.XXX' | asset_url }}",
+        file: "{{ 'XXX.XXX' | file_url }}",
+      }
+    },
+    scripts: {
+      tag_manager: "{{ settings.script_tag_manager }}",
+      google_optimize: "{{ settings.script_google_optimize }}"
+    },
+    routes: {
+      cart: "{{ routes.cart_url }}",
+      cartAdd: "{{ routes.cart_add_url }}",
+      cartChange: "{{ routes.cart_change_url }}",
+      cartUpdate: "{{ routes.cart_update_url }}",
+      cartClear: "{{ routes.cart_clear_url }}"
+    },
+    money_format: "{{ shop.money_format }}",
+    money_separator: "{{ 100000 | money | split: '1' | last | split: '0' | first }}",
+    locale: {{ request.locale | json }},
+    design_mode: {{ request.design_mode | json }},
+    customer: {{ customer.email | json }},
+    wishlist: {{ customer.metafields.askphill.wishlist.value | json }},
+    wishlist_endpoint: {{ settings.wishlist_endpoint | json }},
+  }
+</script>

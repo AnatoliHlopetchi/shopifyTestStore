@@ -1,0 +1,37 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders a native shopify form's errors
+
+  About:
+    Render <ul></ul> with <li></li> for each error, with the 'alert' color. In the starter design all the error messages are right above the submit button.
+
+  Accepts:
+    - form_errors: {Shopify Array - form.errors} Array of error strings; form.errors can be called inside shopify form tags
+
+  OPTIONAL
+    - attributes: {String} Data attributes added to the <ul>
+      Reason this may be needed: In the account.forgot-password-form, this form exists on the account/login page and is shown/hidden depending on button clicks inside login.js
+      With a data-form-errors attribute, if someone is on the Forgot Password form and submits the form, the page reloads and login.js detects if data-form-errors exists,
+      we then hide the normal Login form and show the Forgot Password form
+
+  Usage:
+    {% form 'activate_customer_password', class: 'mt-16' %}
+      ...
+      {% render 'component.form-errors' with form_errors: form.errors %}
+    {% endform %}
+{%- endcomment -%}
+
+{% if form_errors %}
+  <ul class='mt-4' {{ attributes }}>
+    {% for field in form_errors %}
+      <li class='text-sm text-alert'>
+        {% if field == 'form' %}
+          {{ form_errors.messages[field] }}
+        {% else %}
+          {{ form_errors.translated_fields[field] | capitalize }}
+          {{ form_errors.messages[field] }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

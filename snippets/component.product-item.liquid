@@ -1,0 +1,103 @@
+{%- comment -%}
+  Expected behaviour:
+    Renders the product item
+
+  About:
+    Render the product item with default styling.
+    NOTE: Depending on the design and if product-items across the site will behave/look differently, please add additional params as needed
+
+  Accepts:
+    - product: {Object} The product object
+    - atc_enabled: {Boolean} (Default: false) Whether quick atc (add to cart) should be enabled, adding size selector and an ATC button
+
+  Usage:
+    {% render 'component.product-item', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign atc_enabled = atc_enabled | default: false, allow_false: true
+-%}
+
+<div
+  data-component='productItem'
+  data-product-item
+  data-product-id='{{- product.id -}}'
+  class='flex flex-col justify-between'
+>
+  <div class='relative'>
+    <a href='{{- product.url -}}' class='absolute inset-0 z-10'></a>
+    <div class='bg-gray-50 overflow-hidden'>
+      {%- render 'component.image',
+        img: product.featured_image,
+        class: 'mix-blend-multiply transition-transform duration-300'
+      -%}
+    </div>
+    <div class='text-left mt-3'>
+      <h6 class='text-sm mb-1 leading-none'>{{- product.title -}}</h6>
+      <div class='text-sm'>
+        {%- render 'component.price', product: product -%}
+      </div>
+    </div>
+    <button
+      type='button'
+      data-wishlist-button
+      class='absolute z-20 p-2.5 lg:p-3.5 bg-white border-2 border-[#CCCCCC] top-2.5 right-2.5'
+    >
+      {% render 'component.icon',
+        type: 'wishlist',
+        class: 'w-3 lg:w-4 text-black fill-transparent wishlist-active:fill-black'
+      %}
+    </button>
+  </div>
+  {%- if atc_enabled -%}
+    {%- comment -%}
+      Please be aware that your actual project's quick ATC would have different styling and features
+      and thus need to be rebuilt. What we have here is just a very basic version for reference
+    {%- endcomment -%}
+    {%- form 'product', product, novalidate: true -%}
+      <input type='hidden' name='quantity' value='1'>
+      {%- capture options -%}
+        {% for variant in product.variants %}
+          <option
+            value='{{ variant.id }}'
+            {% if variant.id == current_variant.id %}
+              selected
+            {% endif %}
+            {% unless variant.available %}
+              disabled
+            {% endunless %}
+          >
+            {{- variant.title -}}
+          </option>
+        {% endfor %}
+      {%- endcapture -%}
+      {%- liquid
+        if product.available
+          assign option_main_placeholder = 'products.product.select_size'
+          assign atc_text = 'products.product.select_size'
+          assign option_main_attributes = 'data-option-main'
+        else
+          assign option_main_placeholder = 'products.product.sold_out'
+          assign atc_text = 'products.product.sold_out'
+          assign option_main_attributes = 'data-option-main disabled'
+        endif
+      -%}
+      {%- render 'component.select',
+        name: 'id',
+        options: options,
+        placeholder: option_main_placeholder,
+        container_class: 'after:!bottom-4',
+        select_class: 'text-xs mt-2 py-[11px] px-4 border border-[#CCCCCC] appearance-none w-full uppercase',
+        required: true,
+        attributes: option_main_attributes
+      -%}
+      {%- render 'component.button',
+        text: atc_text,
+        style: 'primary',
+        class: 'text-xs w-full mt-2 uppercase',
+        type: 'submit',
+        attributes: 'data-submit disabled'
+      -%}
+    {%- endform -%}
+  {%- endif -%}
+</div>
