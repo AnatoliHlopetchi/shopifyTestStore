@@ -921,11 +921,6 @@
         }
       }
     },
-    "filters": {
-      "availability": {
-        "label": "Verfügbarkeit"
-      }
-    },
     "page_titles": {
       "not_found": "404 Nicht gefunden",
       "challenge": "Herausforderung",
