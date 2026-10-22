@@ -98,7 +98,7 @@
       -%}
       {% comment %} theme-check-enable SpaceInsideBraces {% endcomment %}
     </div>
-    {%- render : 'component.payment-icons', container_class: 'flex flex-wrap px-6 pb-6 justify-center gap-2' -%}
+    {%- render 'component.payment-icons', container_class: 'flex flex-wrap px-6 pb-6 justify-center gap-2' -%}
   </form>
 </div>
 
@@ -108,3 +108,15 @@
   "settings": []
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render : 'component.payment-icons', container_class: 'flex flex-wrap
+    px-6 pb-6 justify-center gap-2' -%}"
+  to: "{%- render 'component.payment-icons', container_class: 'flex flex-wrap px-6
+    pb-6 justify-center gap-2' -%}"
+  position: 3718..3824
+{% endcomment %}

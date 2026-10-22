@@ -105,8 +105,8 @@
     {%- endform -%}
   </div>
   <div class='flex flex-col lg:flex-row space-y-5 lg:space-y-0 mt-12 lg:mt-0 justify-between'>
-    {%- render : 'component.payment-icons', container_class: 'flex space-x-2', icon_width: 'w-10' -%}
-    {%- render : 'component.social-icons', container_class: 'flex flex-row space-x-2', icon_width: 'w-2' %}
+    {%- render 'component.payment-icons', container_class: 'flex space-x-2', icon_width: 'w-10' -%}
+    {%- render 'component.social-icons', container_class: 'flex flex-row space-x-2', icon_width: 'w-2' %}
     <span class='text-xs opacity-80'>
       {{- 'general.footer.copyright' | t: store: shop.name, year: year -}}
     </span>
@@ -125,3 +125,20 @@
   ]
 }
 {% endschema %}
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- render : 'component.payment-icons', container_class: 'flex space-x-2',
+    icon_width: 'w-10' -%}"
+  to: "{%- render 'component.payment-icons', container_class: 'flex space-x-2', icon_width:
+    'w-10' -%}"
+  position: 3866..3961
+- from: "{%- render : 'component.social-icons', container_class: 'flex flex-row space-x-2',
+    icon_width: 'w-2' %}"
+  to: "{%- render 'component.social-icons', container_class: 'flex flex-row space-x-2',
+    icon_width: 'w-2' %}"
+  position: 3966..4067
+{% endcomment %}

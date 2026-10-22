@@ -10,13 +10,7 @@
               assign checked = false
             endif
           -%}
-          {%-
-            render 'component.radio' with
-            label: value,
-            value: value,
-            name: option.name,
-            checked: checked
-          -%}
+          {%- render 'component.radio' with label, label: value, value: value, name: option.name, checked: checked -%}
         {% endfor %}
       </div>
     </div>
@@ -61,7 +55,7 @@
         <p class='product-options__title'>{{- selectSize -}}</p>
       </div>
       {%- liquid
-        echo [option_type] | default: radio
+        echo self[option_type] | default: radio
       -%}
     </div>
   {% endunless %}
@@ -91,3 +85,24 @@
     attributes: 'data-option-main'
   -%}
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: |-
+    {%-
+                render 'component.radio' with
+                label: value,
+                value: value,
+                name: option.name,
+                checked: checked
+              -%}
+  to: "{%- render 'component.radio' with label, label: value, value: value, name:
+    option.name, checked: checked -%}"
+  position: 386..494
+- from: 'echo [option_type] | default: radio'
+  to: 'echo self[option_type] | default: radio'
+  position: 1656..1695
+{% endcomment %}

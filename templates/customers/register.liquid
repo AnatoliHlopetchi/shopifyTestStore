@@ -72,7 +72,7 @@
       container_class: 'mt-4'
     -%}
 
-    {% render 'component.form-errors' with form_errors: form.errors %}
+    {% render 'component.form-errors' with form_errors, form_errors: form.errors %}
 
     {%-
       render 'component.checkbox',
@@ -101,3 +101,14 @@
     {{- 'customer.register.return_to_login_html' | t -}}
   </span>
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'component.form-errors' with form_errors: form.errors %}"
+  to: "{% render 'component.form-errors' with form_errors, form_errors: form.errors
+    %}"
+  position: 2381..2460
+{% endcomment %}

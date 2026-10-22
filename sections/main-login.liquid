@@ -55,7 +55,7 @@
           -%}
         {%- endif -%}
 
-        {% render 'component.form-errors' with form_errors: form.errors %}
+        {% render 'component.form-errors' with form_errors, form_errors: form.errors %}
 
         {%
           render 'component.button',
@@ -87,3 +87,14 @@
 
   {% render 'account.forgot-password-form' %}
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'component.form-errors' with form_errors: form.errors %}"
+  to: "{% render 'component.form-errors' with form_errors, form_errors: form.errors
+    %}"
+  position: 2004..2083
+{% endcomment %}
